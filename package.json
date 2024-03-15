@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:renbondoc.github.io": "node dist/renbondoc.github.io/server/server.mjs",
-    "build:prod": "ng build --configuration production --base-href https://renbondoc.github.io/",
+    "build:prod": "ng build --configuration production --base-href --base-href=/renbondoc.github.io/",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
