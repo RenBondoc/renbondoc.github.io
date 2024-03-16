@@ -2,6 +2,7 @@
 
 # Compiled output
 /dist
+docs/renbondoc.github.io
 /tmp
 /out-tsc
 /bazel-out
