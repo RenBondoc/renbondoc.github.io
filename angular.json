@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "docs/renbondoc.github.io",
+            "outputPath": "dist/renbondoc.github.io",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
