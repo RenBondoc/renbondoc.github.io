@@ -1,0 +1,31 @@
+* {
+    overflow-y: hidden;
+}
+
+h2 {
+    text-align: center;
+    padding-top: 5%;
+    color: bisque;
+    font-family: Tahoma, sans-serif;
+    position: absolute;
+}
+
+.center-fit {
+    max-width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.text {
+    text-align: center;
+    padding-top: 5%;
+    color: bisque;
+    font-family: Tahoma, sans-serif;
+    position: relative;
+}
+
+img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
