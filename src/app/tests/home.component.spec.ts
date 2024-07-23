@@ -49,7 +49,7 @@ describe(`HomeComponent`, () => {
     // Trigger the click on the "About" link
     const aboutLink: HTMLAnchorElement | null = navElement?.querySelector(`ul li:nth-child(2) a`) as HTMLAnchorElement;
     if(aboutLink) {
-      aboutLink.click();
+      aboutLink.dispatchEvent(new Event(`click`))
     } else {
       expect(aboutLink).toBeTruthy();
     }
