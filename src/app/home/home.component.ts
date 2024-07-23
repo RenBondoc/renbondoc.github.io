@@ -16,10 +16,12 @@ export class HomeComponent {
   }
   
   setHomeText() {
+    console.log(`Home Has been clicked. Trying to emit something`);
     this.messageEvent.emit(`You are in the HOME page now`);
   }
 
   setAboutText() {
+    console.log(`About Has been clicked. Trying to emit something`);
     this.messageEvent.emit(`You are in the ABOUT page now`);
   }
 
