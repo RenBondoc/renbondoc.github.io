@@ -6,12 +6,14 @@ nav {
 
 nav ul {
   list-style: none;
+  margin-right: auto;
+  transform: translateX(-10%);
 }
 
 ul li {
   display: inline;
   padding: 2%;
-  padding-left: 10px;
+  padding-left: 15px;
 }
 
 li a {
@@ -20,4 +22,25 @@ li a {
     text-decoration: none;
     cursor: pointer;
     font-family: Tahoma, sans-serif;
+}
+
+button {
+  height: 60px;
+  width: 60px;
+  width: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  float: left;
+  margin-right: auto;
+  border-color: transparent;
+  background-color: #242321;
+}
+
+button:hover {
+	background-color: #8f7b53;
+}
+
+img {
+  height: 100%;
+  width: 100%;
 }

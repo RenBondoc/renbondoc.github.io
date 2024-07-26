@@ -1,10 +1,20 @@
 <header>
-  <app-home (messageEvent)="setText($event)"></app-home>
+  <app-home (messageEvent)="toggleZoomIn($event)" (backButton)="toggleZoomOut()"></app-home>
 </header>
 
 <!-- Main content area -->
-<img src="../assets/img/background.jpg" />
-<div class="text">Hello, {{ getText() }}</div>
+<div class="content-container">
+  <img
+    [@zoomAnimation]="getZoomState()"
+    (@zoomAnimation.done)="onAnimationComplete($event)"
+    id="backgroundImage"
+    class="background-image"
+    [src]="getBackgroundImg()"
+  />
+  <!--[class.zoomedIn]="getZoomState() === 'zoomedIn'"-->
+  <span *ngIf="getShowText()" class="text">{{ getTextTypeWriter() | async }}</span>
+</div>
+
 <!-- Additional content goes here -->
 
 <router-outlet></router-outlet>

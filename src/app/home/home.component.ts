@@ -10,20 +10,18 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class HomeComponent {
 
   @Output() messageEvent = new EventEmitter<string>();
+  @Output() homeButton = new EventEmitter<null>();
 
   constructor() {
 
   }
-  
-  setHomeText() {
-    console.log(`Home Has been clicked. Trying to emit something`);
-    this.messageEvent.emit(`You are in the HOME page now`);
+
+  setText(type: string): void {
+    this.messageEvent.emit(`You are in the ${type} page now`);
   }
 
-  setAboutText() {
-    console.log(`About Has been clicked. Trying to emit something`);
-    this.messageEvent.emit(`You are in the ABOUT page now`);
+  homeButtonClick(): void {
+    this.homeButton.emit();
   }
-
   
 }
