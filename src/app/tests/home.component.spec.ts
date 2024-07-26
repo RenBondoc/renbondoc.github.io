@@ -48,7 +48,7 @@ describe(`HomeComponent`, () => {
     // Trigger the click on the "About" link
     const aboutLink: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(1) a`) as HTMLAnchorElement;
     aboutLink.dispatchEvent(new Event(`click`))
-    
+
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
       `You are in the About page now`
@@ -65,6 +65,16 @@ describe(`HomeComponent`, () => {
 
     fixture.detectChanges();
     expect(component.homeButton.emit).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should emit void on click oh home button`, () => {
+
+    // trigger the click
+    const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
+    const resumeLink: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(3) a`) as HTMLAnchorElement;
+    expect(resumeLink).toBeTruthy();
+    expect(resumeLink.href).toContain(`Renan-Bondoc-Resumev3.pdf`)
+    expect(resumeLink.download).toBe(`ren_bondoc_resume`);
   });
 
 });
