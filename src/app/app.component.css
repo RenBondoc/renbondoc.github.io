@@ -11,6 +11,8 @@
   justify-content: center; /* Horizontally center the content */
   align-items: center; /* Vertically center the content */
   position: fixed;
+  height: 150vh;
+  width: 100%;
 }
 
 .text {
@@ -18,16 +20,23 @@
   top: 5%;
   left: 8%;
   color: rgb(60, 158, 73);
-  font-family: Tahoma, sans-serif;
+  font-family: Tahoma, wcp;
   position: absolute;
   font-size: larger;
+  width: 20%;
 }
 
 .background-image {
   position: relative; /* Fixed position to cover the entire viewport */
   width: 100%;
-  height: 150%;
+  height: 100%;
   top: -10vh; /* Move the image upwards */
   z-index: -1; /* Send the background image to the back */
-  background-size: cover;
+}
+
+/* Mobile-specific styles */
+.mobile {
+  width: 100%;
+  height: 100%; /* Adjust as needed for mobile layout */
+  transform: translateY(500px);
 }

@@ -3,21 +3,39 @@ import { AppComponent } from '../app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnimationEvent } from '@angular/animations';
 import { TypewriterService } from '../services/typewriter.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 describe(`AppComponent`, () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let typewriterService: TypewriterService;
 
+  let breakpointObserver: BreakpointObserver;
+  let breakpointObserverMock: { observe: jasmine.Spy };
+  let mockBreakpointState: BreakpointState
+
   beforeEach(async () => {
+
+    breakpointObserverMock = {
+      observe: jasmine.createSpy(`observe`)
+    };
+
+    mockBreakpointState = {
+      matches: false,
+      breakpoints: {
+        '(max-width: 599px)': false
+      }
+    };
+
     await TestBed.configureTestingModule({
       imports: [
         AppComponent,
         BrowserAnimationsModule
       ],
       providers: [
-        TypewriterService
+        TypewriterService,
+        { provide: BreakpointObserver, useValue: breakpointObserverMock }
       ]
     }).compileComponents();
 
@@ -25,15 +43,48 @@ describe(`AppComponent`, () => {
     fixture = TestBed.createComponent(AppComponent);
     component= fixture.componentInstance;
     typewriterService = TestBed.inject(TypewriterService);
+    breakpointObserver = TestBed.inject(BreakpointObserver);
   });
 
   it(`should create the app`, () => {
     expect(component).toBeTruthy();
   });
 
+  it(`should set isMobile to true when handset breakpoint matches`, () => {
+    const mockBreakpointState: BreakpointState = {
+      matches: true,
+      breakpoints: {
+        '(max-width: 599px)': true
+      }
+    };
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(component.getIsMobile()).toBeTrue();
+    //Currently not changing backgroun image, but feature is possible >> Still a work in progress
+    expect(component.getBackgroundImg()).toBe(`../assets/img/background.jpg`);
+  });
+
+  it(`should set isMobile to false when handset breakpoint does not match`, () => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(component.getIsMobile()).toBeFalse();
+    expect(component.getBackgroundImg()).toBe(`../assets/img/background.jpg`);
+  });
+
   it(`should load animated text after toggleZoomIn()`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+
     const testText: string = `This is a test`;
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(testText));
+
+    component.ngOnInit();
+    fixture.detectChanges();
 
     component.toggleZoomIn(testText);
     fixture.detectChanges();
@@ -60,12 +111,17 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should change text without animation a second toggleZoomIn()`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+
+    component.ngOnInit();
+
     const testText: string = `This is a test`;
     const newText: string = `This is a new test text`;
   
     //There are 3 return calls as fixture.DetectChanges() calls the onAnimationComplete on the first zoomIn()
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValues(of(testText),of(`${testText} 2`),of(newText));
-    
+  
+
     //Do a ZoomIn first to trigger the show text
     component.toggleZoomIn(testText);
 
@@ -99,12 +155,15 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should remove text after toggleZoomOut()`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+
     const testText: string = `This is a test`;
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(testText));
 
+    component.ngOnInit();
     //Do a ZoomIn first to trigger the show text
     component.toggleZoomIn(testText);
-    
+
     // Simulate animation complete event
     const animationEventZoomIn: AnimationEvent = {
       fromState: `initial`,

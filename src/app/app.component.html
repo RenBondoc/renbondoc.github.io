@@ -1,21 +1,19 @@
 <header>
-  <app-home (messageEvent)="toggleZoomIn($event)" (homeButton)="toggleZoomOut()"></app-home>
+  <app-home [isMobile]="getIsMobile()" (messageEvent)="toggleZoomIn($event)" (homeButton)="toggleZoomOut()"></app-home>
 </header>
 
 <!-- Main content area -->
 <div class="content-container">
   <img
+    [ngClass]="{'mobile': getIsMobile()}"
     [@zoomAnimation]="getZoomState()"
     (@zoomAnimation.done)="onAnimationComplete($event)"
     id="backgroundImage"
     class="background-image"
     [src]="getBackgroundImg()"
   />
-  <!--[class.zoomedIn]="getZoomState() === 'zoomedIn'"-->
   <span *ngIf="getShowText()" class="text">{{ getTextTypeWriter() | async }}</span>
 </div>
 
-<!-- Additional content goes here -->
 
 <router-outlet></router-outlet>
-<!-- This router-outlet will render the content of components loaded by the router -->

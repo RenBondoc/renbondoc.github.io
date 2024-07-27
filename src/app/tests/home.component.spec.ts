@@ -68,13 +68,21 @@ describe(`HomeComponent`, () => {
   });
 
   it(`should emit void on click oh home button`, () => {
-
+    spyOn(component.messageEvent, `emit`);
     // trigger the click
     const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
     const resumeLink: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(3) a`) as HTMLAnchorElement;
     expect(resumeLink).toBeTruthy();
     expect(resumeLink.href).toContain(`Renan-Bondoc-Resumev3.pdf`)
     expect(resumeLink.download).toBe(`ren_bondoc_resume`);
+
+
+    resumeLink.dispatchEvent(new Event(`click`))
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(
+      `Downloading resume.....`
+    );
   });
 
 });

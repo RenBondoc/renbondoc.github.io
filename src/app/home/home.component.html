@@ -1,9 +1,33 @@
 <nav>
-    <button class="home-button" (click)="homeButtonClick()"><img src="../../assets/img/homeButton.png"></button>
-    <ul>
+    <button *ngIf="!isMobile" class="home-button" (click)="homeButtonClick()"><img src="../../assets/img/homeButton.png"></button>
+
+    <ul class="navBar" *ngIf="!isMobile; else dropDown">
         <li><a (click)="setText('About')">About</a></li>
         <li><a (click)="setText('Projects')">Projects</a></li>
-        <li><a href="../../assets/doc/Renan-Bondoc-Resumev3.pdf" download="ren_bondoc_resume">Resume</a></li>
+        <li><a (click)="setText('Resume')" href="../../assets/doc/Renan-Bondoc-Resumev3.pdf" download="ren_bondoc_resume">Resume</a></li>
         <li><a >Contact</a></li>
     </ul>
+
+    <ng-template #dropDown>
+        <button class="dropbtn" (click)="toggleDropdown()">
+            <img src="../../assets/img/menu.png">
+        </button>
+            
+        <div 
+            [@slideAnimation]="getAnimationSate()"
+            class="dropdown">
+            
+            <ul *ngIf="getDropDown()" class="dropdown-content">
+                <li><a (click)="homeButtonClick()">Home</a></li>
+                <li><a (click)="setText('About')">About</a></li>
+                <li><a (click)="setText('Projects')">Projects</a></li>
+                <li><a (click)="setText('Resume')" href="../../assets/doc/Renan-Bondoc-Resumev3.pdf" download="ren_bondoc_resume">Resume</a></li>
+                <li><a >Contact</a></li>
+            </ul>
+        </div>
+        
+    </ng-template>
 </nav>
+
+
+    

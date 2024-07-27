@@ -4,13 +4,13 @@ nav {
   justify-content: center;
 }
 
-nav ul {
+nav .navBar {
   list-style: none;
   margin-right: auto;
   transform: translateX(-10%);
 }
 
-ul li {
+.navBar li {
   display: inline;
   padding: 2%;
   padding-left: 15px;
@@ -34,6 +34,7 @@ button {
   margin-right: auto;
   border-color: transparent;
   background-color: #242321;
+  cursor: pointer;
 }
 
 button:hover {
@@ -43,4 +44,24 @@ button:hover {
 img {
   height: 100%;
   width: 100%;
+}
+
+.dropdown {
+  margin-right: auto;
+  height: auto;
+  z-index: 20;
+}
+
+.dropdown-content ul {
+  display: inline-block;
+  transform: translateY(-20px);
+  margin: 0 auto;
+  z-index: 20;
+}
+
+.dropdown-content li {
+  list-style: none;
+  padding-top: 15px;
+  padding-left: 20px;
+  z-index: 20;
 }

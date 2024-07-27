@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger, AnimationEvent, keyframes } from '@angular/animations';
 import { TypewriterService } from './services/typewriter.service';
 import { map, Observable, of } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: `app-root`,
@@ -33,7 +34,7 @@ import { map, Observable, of } from 'rxjs';
     ])
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   
   private backgroundImgSrc: string;
@@ -43,9 +44,11 @@ export class AppComponent {
 
   private showText: boolean;
   private zoomedIn: boolean;
+  private isMobile: boolean;
 
   //Inject Service
-  private typewriterService = inject(TypewriterService);
+  private typewriterService: TypewriterService = inject(TypewriterService);
+  private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
 
   constructor() {
     this.backgroundImgSrc = `../assets/img/background.jpg`
@@ -54,6 +57,23 @@ export class AppComponent {
     this.text = ``;
     this.showText = false;
     this.zoomedIn = false;
+    this.isMobile = false;
+  }
+
+  ngOnInit(): void {
+    this.breakpointObserver.observe([
+      Breakpoints.Handset
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.isMobile = true;
+        console.log(`Using Mobile View`);
+
+      } else {
+        this.isMobile = false;
+        console.log(`Using Desktop View`);
+        
+      }
+    });
   }
 
   getTextTypeWriter(): Observable<string> {
@@ -70,6 +90,10 @@ export class AppComponent {
 
   getZoomState(): string {
     return this.zoomState;
+  }
+
+  getIsMobile(): boolean {
+    return this.isMobile;
   }
 
   toggleZoomIn(text: string): void {
