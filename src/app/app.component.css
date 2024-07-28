@@ -23,7 +23,7 @@
   font-family: Tahoma, wcp;
   position: absolute;
   font-size: larger;
-  width: 20%;
+  width: 80%;
 }
 
 .background-image {
@@ -31,12 +31,12 @@
   width: 100%;
   height: 100%;
   top: -10vh; /* Move the image upwards */
-  z-index: -1; /* Send the background image to the back */
+  z-index: -1;
 }
 
 /* Mobile-specific styles */
 .mobile {
   width: 100%;
-  height: 100%; /* Adjust as needed for mobile layout */
+  height: 100%;
   transform: translateY(500px);
 }

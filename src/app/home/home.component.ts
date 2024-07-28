@@ -13,7 +13,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   animations: [
     trigger(`slideAnimation`, [
       state(`up`, style({
-        transform: `translateY(-100px)`,
+        transform: `translateY(-300px)`,
       })),
       state(`down`, style({
         transform: `translateY(0px)`,
@@ -22,7 +22,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         animate(`0.5s`)
       ]),
       transition(`down => up`, [
-        animate(`0.5s 1s`)
+        animate(`0.5s`)
       ])
     ])
   ]
@@ -43,7 +43,6 @@ export class HomeComponent {
   }
 
   setText(type: string): void {
-    this.toggleDropdown();
 
     switch(type) {
       case `Resume`:
@@ -53,18 +52,31 @@ export class HomeComponent {
         this.messageEvent.emit(`You are in the ${type} page now`);
         break;
     }
-    
+    this.toggleDropdown();
   }
 
   homeButtonClick(): void {
-    this.toggleDropdown();
-
     this.homeButton.emit();
+
+    if(this.showDropDown) {
+      this.showDropDown = false;
+    }
   }
 
-  toggleDropdown(): void {
-    this.showDropDown = !this.showDropDown;
-    this.animationState = this.showDropDown ? `down` : `up`;
+  async toggleDropdown(): Promise<void> {
+    // this.showDropDown = !this.showDropDown;
+    // this.animationState = this.showDropDown ? `down` : `up`;
+
+    //The order of this code matters
+    console.log(`Checking dropdown: ${this.showDropDown}`)
+    if (this.showDropDown) {
+      this.animationState = `up`;
+      await new Promise( resolve => setTimeout(resolve, 550) );
+      this.showDropDown = false;
+    } else {
+      this.showDropDown = true;
+      this.animationState = `down`;
+    }
   }
 
   getDropDown(): boolean {

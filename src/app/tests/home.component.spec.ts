@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomeComponent } from '../home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe(`HomeComponent`, () => {
   let component: HomeComponent;
@@ -8,11 +8,15 @@ describe(`HomeComponent`, () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent],
+      imports: [
+        HomeComponent,
+        BrowserAnimationsModule
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -67,7 +71,7 @@ describe(`HomeComponent`, () => {
     expect(component.homeButton.emit).toHaveBeenCalledTimes(1);
   });
 
-  it(`should emit void on click oh home button`, () => {
+  it(`should download resume and print message when resume button is clicked`, () => {
     spyOn(component.messageEvent, `emit`);
     // trigger the click
     const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
@@ -83,6 +87,59 @@ describe(`HomeComponent`, () => {
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
       `Downloading resume.....`
     );
+  });
+
+  it(`should show a menu button during mobile view and show a dropdown when clicked`, () => {
+    spyOn(component.messageEvent, `emit`);
+    component.isMobile = true;
+    fixture.detectChanges();
+
+    // trigger the click
+    const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
+    console.log(navElement);
+    const menu: HTMLButtonElement = navElement.querySelectorAll(`button`)[1] as HTMLButtonElement;
+    expect(menu).toBeTruthy();
+
+    menu.dispatchEvent(new Event(`click`))
+    fixture.detectChanges();
+
+    expect(component.getDropDown()).toBeTrue();
+    expect(component.getAnimationSate()).toEqual(`down`);
+    const dropDownList: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(1) a`) as HTMLAnchorElement;
+    dropDownList.dispatchEvent(new Event(`click`))
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(
+      `You are in the About page now`
+    );
+
+  });
+
+  it(`should hide dropdown when home button is clicked`, () => {
+    spyOn(component.messageEvent, `emit`);
+    spyOn(component.homeButton, `emit`);
+    component.isMobile = true;
+    fixture.detectChanges();
+
+    // trigger the click
+    const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
+    console.log(navElement);
+    const menu: HTMLButtonElement = navElement.querySelectorAll(`button`)[1] as HTMLButtonElement;
+    expect(menu).toBeTruthy();
+
+    menu.dispatchEvent(new Event(`click`))
+    fixture.detectChanges();
+
+    expect(component.getDropDown()).toBeTrue();
+    expect(component.getAnimationSate()).toEqual(`down`);
+    const homeButton: HTMLButtonElement = navElement.querySelectorAll(`button`)[0] as HTMLButtonElement;
+    homeButton.dispatchEvent(new Event(`click`))
+
+    fixture.detectChanges();
+    expect(component.homeButton.emit).toHaveBeenCalledTimes(1);
+    expect(component.getDropDown()).toBeFalse();
+    expect(component.getAnimationSate()).toEqual(`down`);
+
   });
 
 });
