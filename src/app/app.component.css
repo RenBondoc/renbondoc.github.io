@@ -49,11 +49,28 @@
 
 .text {
   text-align: left;
-  top: 5%;
-  left: 8%;
   color: rgb(60, 158, 73);
   font-family: Tahoma, wcp;
-  position: absolute;
   font-size: larger;
   width: 80%;
+}
+
+.text-container {
+  position: fixed;
+  width: 100%;
+  height: 80%;
+  margin-top: 2%;
+  padding-left: 3.5%;
+  overflow-y: scroll;
+  max-height: fit-content;
+}
+
+.text-container li{
+  list-style: none;
+  padding-top: 2%;
+}
+
+.text-container li span{
+  width: 60%;
+  white-space: pre-wrap;
 }

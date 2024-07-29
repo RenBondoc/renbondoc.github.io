@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CommonModule } from '@angular/common';
-import { animate, state, style, transition, trigger, AnimationEvent, keyframes } from '@angular/animations';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { animate, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
 import { TypewriterService } from './services/typewriter.service';
 import { map, Observable, of } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -35,29 +35,30 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   ]
 })
 export class AppComponent implements OnInit{
-
   
   private backgroundImgSrc: string;
   private textTypeWriter: Observable<string>;
-  private text: string;
   private zoomState: string;
 
   private showText: boolean;
   private zoomedIn: boolean;
   private isMobile: boolean;
 
+  private previousText: Array<string>;
+
   //Inject Service
   private typewriterService: TypewriterService = inject(TypewriterService);
   private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
+  private document: Document = inject(DOCUMENT);
 
   constructor() {
     this.backgroundImgSrc = `../assets/img/background.jpg`;
     this.zoomState = `initial`;
     this.textTypeWriter = of(``)
-    this.text = ``;
     this.showText = false;
     this.zoomedIn = false;
     this.isMobile = false;
+    this.previousText = [];
   }
 
   ngOnInit(): void {
@@ -76,8 +77,18 @@ export class AppComponent implements OnInit{
     });
   }
 
+  ngAfterViewChecked(): void {
+    // if (this.showText) {
+    //   this.scrollToBottom();
+    // } 
+  }
+
   getTextTypeWriter(): Observable<string> {
     return this.textTypeWriter;
+  }
+
+  getPreviousTexts(): Array<string> {
+    return this.previousText;
   }
 
   getBackgroundImg(): string {
@@ -98,18 +109,18 @@ export class AppComponent implements OnInit{
 
   toggleZoomIn(text: string): void {
     this.zoomState = `zoomedIn`;
-    this.text = text;
-
     if(this.zoomedIn) {
-      this.textTypeWriter = this.typewriterService.getTypewriterEffect([text]).pipe(map((text: string) => text));
+      this.textTypeWriter = this.typewriterService.getTypewriterEffect([text]).pipe(map((text: string) => {
+        this.scrollToBottom();
+        return text 
+      }));
     }
-
-    
+    this.previousText.push(text);
   }
 
   toggleZoomOut(): void {
     this.showText = false;
-    this.text = ``;
+    this.previousText = [];
     this.zoomState = `initial`;
   }
 
@@ -117,13 +128,20 @@ export class AppComponent implements OnInit{
     if (event.toState === `zoomedIn`) {
       this.showText = true;
       this.zoomedIn = true;
-
     } else {
       this.zoomedIn = false
-
     }
 
-    this.textTypeWriter = this.typewriterService.getTypewriterEffect([this.text]).pipe(map((text: string) => text));
+    this.textTypeWriter = this.typewriterService.getTypewriterEffect([this.previousText[this.previousText.length - 1]]).pipe(map((text: string) => text));
+  }
+  
+  scrollToBottom() {
+    setTimeout(() => {
+      let scrollableDiv: HTMLElement | null = this.document.getElementById(`text-container`);
+      if (scrollableDiv) {
+        scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+      }
+    }, 0);
   }
   
 }

@@ -8,11 +8,19 @@
     [ngClass]="getIsMobile() ? 'mobile-background-image' : 'background-image'"
     [@zoomAnimation]="getZoomState()"
     (@zoomAnimation.done)="onAnimationComplete($event)"
+    (click)="toggleZoomIn('Welcome...')"
     id="backgroundImage"
     [src]="getBackgroundImg()"
   />
-  <span *ngIf="getShowText()" class="text">{{ getTextTypeWriter() | async }}</span>
 </div>
 
+<div id="text-container" *ngIf="getShowText()" class="text-container">
+  <ul class="text">
+    <li *ngFor="let previousText of getPreviousTexts(); let i = index">
+      <span class="text" *ngIf="i < getPreviousTexts().length - 1">:~$ {{ previousText }}</span>
+    </li>
+    <li><span class="text">:~$ {{ getTextTypeWriter() | async }}</span></li>
+  </ul>
+</div>
 
 <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnimationEvent } from '@angular/animations';
@@ -106,7 +106,7 @@ describe(`AppComponent`, () => {
     flush();
     
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(testText);
+    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(`:~$ ${testText}`);
     expect(component.getShowText()).toBe(true);
   }));
 
@@ -139,7 +139,7 @@ describe(`AppComponent`, () => {
     fixture.detectChanges();
 
     const changed: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changed.querySelector(`span`)?.textContent).toEqual(testText);
+    expect(changed.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(`:~$ ${testText}`);
 
     // Flush all pending observables
     flush();
@@ -148,8 +148,11 @@ describe(`AppComponent`, () => {
     component.toggleZoomIn(newText);
     fixture.detectChanges();
 
+    flush();
+    
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(newText);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(`:~$ ${testText}`);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(`:~$ ${newText}`);
     expect(component.getShowText()).toBe(true);
 
   }));
@@ -177,6 +180,8 @@ describe(`AppComponent`, () => {
     component.onAnimationComplete(animationEventZoomIn);
     fixture.detectChanges();
 
+    const changed: HTMLElement = fixture.nativeElement as HTMLElement;
+    expect(changed.querySelector(`span`)?.textContent).toEqual(`:~$ ${testText}`);
     // Flush all pending observables
     flush();
 
