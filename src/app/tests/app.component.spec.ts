@@ -64,7 +64,7 @@ describe(`AppComponent`, () => {
 
     expect(component.getIsMobile()).toBeTrue();
     //Currently not changing backgroun image, but feature is possible >> Still a work in progress
-    expect(component.getBackgroundImg()).toBe(`../assets/img/background.jpg`);
+    expect(component.getBackgroundImg()).toBe(`../assets/img/mobile_background_closeup.jpg`);
   });
 
   it(`should set isMobile to false when handset breakpoint does not match`, () => {

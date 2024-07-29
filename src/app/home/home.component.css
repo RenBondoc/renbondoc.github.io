@@ -7,14 +7,19 @@ nav {
   display: flex;
   justify-content: center;
   list-style: none;
-  margin-right: 0 auto;
-  margin-left: 0 auto;
+  margin: 0 auto;
+}
+
+.navBar {
+  padding: 0;
+  margin: 0;
 }
 
 .navBar li {
   display: inline;
   padding: 2%;
   padding-left: 15px;
+  margin: 0;
 }
 
 .navBar li a {
@@ -30,7 +35,7 @@ button {
   width: 60px;
   float: left;
   margin-right: auto;
-  border-color: transparent;
+  border: none;
   background-color: transparent;
   cursor: pointer;
 }
@@ -44,22 +49,28 @@ button:hover {
   width: 100%;
 }
 
-/* Mobile Stlyes */
+/* Mobile Styles */
 
 .dropdown {
   position: fixed;
   z-index: 1;
   width: 100%;
-  height: auto;
-  margin-top: auto;
 }
 
 .dropdown-content {
-  position: fixed;
   background-color: #242321;
   width: 100%;
   overflow: hidden;
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.dropdown-content ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .dropdown-content li {
@@ -68,8 +79,17 @@ button:hover {
   cursor: pointer;
   font-family: Tahoma, sans-serif;
   padding: 20px;
-  transform: translateX(100px);
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.dropdown-content li a {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .dropbtn {

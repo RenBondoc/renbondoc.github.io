@@ -51,7 +51,7 @@ export class AppComponent implements OnInit{
   private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
 
   constructor() {
-    this.backgroundImgSrc = `../assets/img/background.jpg`
+    this.backgroundImgSrc = `../assets/img/background.jpg`;
     this.zoomState = `initial`;
     this.textTypeWriter = of(``)
     this.text = ``;
@@ -67,11 +67,11 @@ export class AppComponent implements OnInit{
       if (result.matches) {
         this.isMobile = true;
         console.log(`Using Mobile View`);
-
+        this.backgroundImgSrc = `../assets/img/mobile_background_closeup.jpg`;
       } else {
         this.isMobile = false;
         console.log(`Using Desktop View`);
-        
+        this.backgroundImgSrc = `../assets/img/background.jpg`;
       }
     });
   }

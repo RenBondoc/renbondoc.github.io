@@ -96,7 +96,6 @@ describe(`HomeComponent`, () => {
 
     // trigger the click
     const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
-    console.log(navElement);
     const menu: HTMLButtonElement = navElement.querySelectorAll(`button`)[1] as HTMLButtonElement;
     expect(menu).toBeTruthy();
 
@@ -123,7 +122,6 @@ describe(`HomeComponent`, () => {
 
     // trigger the click
     const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
-    console.log(navElement);
     const menu: HTMLButtonElement = navElement.querySelectorAll(`button`)[1] as HTMLButtonElement;
     expect(menu).toBeTruthy();
 

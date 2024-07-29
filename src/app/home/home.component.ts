@@ -64,9 +64,6 @@ export class HomeComponent {
   }
 
   async toggleDropdown(): Promise<void> {
-    // this.showDropDown = !this.showDropDown;
-    // this.animationState = this.showDropDown ? `down` : `up`;
-
     //The order of this code matters
     console.log(`Checking dropdown: ${this.showDropDown}`)
     if (this.showDropDown) {

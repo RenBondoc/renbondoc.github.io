@@ -3,13 +3,12 @@
 </header>
 
 <!-- Main content area -->
-<div class="content-container">
+<div [ngClass]="getIsMobile() ? 'mobile-container' : 'content-container'">
   <img
-    [ngClass]="{'mobile': getIsMobile()}"
+    [ngClass]="getIsMobile() ? 'mobile-background-image' : 'background-image'"
     [@zoomAnimation]="getZoomState()"
     (@zoomAnimation.done)="onAnimationComplete($event)"
     id="backgroundImage"
-    class="background-image"
     [src]="getBackgroundImg()"
   />
   <span *ngIf="getShowText()" class="text">{{ getTextTypeWriter() | async }}</span>
