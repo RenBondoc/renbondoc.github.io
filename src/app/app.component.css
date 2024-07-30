@@ -74,3 +74,8 @@
   width: 60%;
   white-space: pre-wrap;
 }
+
+input {
+  background-color: transparent;
+  border-color: transparent;
+}

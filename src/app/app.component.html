@@ -20,6 +20,7 @@
       <span class="text" *ngIf="i < getPreviousTexts().length - 1">:~$ {{ previousText }}</span>
     </li>
     <li><span class="text">:~$ {{ getTextTypeWriter() | async }}</span></li>
+    <li>:~$ <input [(ngModel)]="inputText" type="text" class="text" (keyup.enter)="onSubmit(inputText)"></li>
   </ul>
 </div>
 

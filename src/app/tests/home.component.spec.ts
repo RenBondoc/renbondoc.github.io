@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { HomeComponent } from '../home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -114,7 +114,7 @@ describe(`HomeComponent`, () => {
 
   });
 
-  it(`should hide dropdown when home button is clicked`, () => {
+  it(`should hide dropdown when home button is clicked`, fakeAsync(() => {
     spyOn(component.messageEvent, `emit`);
     spyOn(component.homeButton, `emit`);
     component.isMobile = true;
@@ -133,11 +133,13 @@ describe(`HomeComponent`, () => {
     const homeButton: HTMLButtonElement = navElement.querySelectorAll(`button`)[0] as HTMLButtonElement;
     homeButton.dispatchEvent(new Event(`click`))
 
+    tick(550);
+
     fixture.detectChanges();
     expect(component.homeButton.emit).toHaveBeenCalledTimes(1);
     expect(component.getDropDown()).toBeFalse();
     expect(component.getAnimationSate()).toEqual(`down`);
 
-  });
+  }));
 
 });

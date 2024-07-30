@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
@@ -6,6 +6,7 @@ import { animate, state, style, transition, trigger, AnimationEvent } from '@ang
 import { TypewriterService } from './services/typewriter.service';
 import { map, Observable, of } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: `app-root`,
@@ -13,7 +14,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   imports: [ 
     RouterOutlet,
     HomeComponent,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: `./app.component.html`,
   styleUrl: `./app.component.css`,
@@ -36,6 +38,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 })
 export class AppComponent implements OnInit{
   
+  @ViewChild(HomeComponent) homeComponent!: HomeComponent
+  
   private backgroundImgSrc: string;
   private textTypeWriter: Observable<string>;
   private zoomState: string;
@@ -50,6 +54,7 @@ export class AppComponent implements OnInit{
   private typewriterService: TypewriterService = inject(TypewriterService);
   private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
   private document: Document = inject(DOCUMENT);
+  inputText: string;
 
   constructor() {
     this.backgroundImgSrc = `../assets/img/background.jpg`;
@@ -59,6 +64,7 @@ export class AppComponent implements OnInit{
     this.zoomedIn = false;
     this.isMobile = false;
     this.previousText = [];
+    this.inputText = ``;
   }
 
   ngOnInit(): void {
@@ -142,6 +148,13 @@ export class AppComponent implements OnInit{
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
       }
     }, 0);
+  }
+
+  onSubmit(input: string) {
+    console.log(`Input: ${input}`);
+    this.inputText = input;
+    this.homeComponent.setText(this.inputText);
+    this.inputText = ``;
   }
   
 }
