@@ -1,21 +1,23 @@
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { TypewriterService } from '../services/typewriter.service';
-import { interval, map, take } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 describe('TypewriterService', () => {
   let service: TypewriterService;
+  let sanitizer: DomSanitizer;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(TypewriterService);
+    sanitizer = TestBed.inject(DomSanitizer);
   });
 
-  it('should be created', () => {
+  it(`should be created`, () => {
     expect(service).toBeTruthy();
   });
 
-  it('should emit substrings of word at specified intervals', (done: DoneFn) => {
+  it(`should emit substrings of word at specified intervals`, (done: DoneFn) => {
     const word = `Testing`;
 
     let result: Array<string> = [];
@@ -32,8 +34,9 @@ describe('TypewriterService', () => {
     });
   });
 
-  it('should emit void getButton is called()', (done: DoneFn) => {
-    const word = `Testing`;
+  it(`should emit empty string when unsafe HTML is entered`, (done: DoneFn) => {
+    spyOn(sanitizer,`sanitize`).and.returnValue(null);
+    const word = `<script>alert('Hello!');</script>`;
 
     let result: Array<string> = [];
 
@@ -42,8 +45,8 @@ describe('TypewriterService', () => {
         result.push(substring);
       },
       complete: () => {
-        expect(result).toEqual([`T`, `Te`, `Tes`, `Test`, `Testi`, `Testin`, `Testing`]);
-        expect(result.length).toEqual(word.length);
+        expect(result).toEqual([]);
+        expect(result.length).toEqual(0);
         done();
       }
     });

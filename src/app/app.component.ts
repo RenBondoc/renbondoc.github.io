@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, SecurityContext, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { CommonModule, DOCUMENT } from '@angular/common';
@@ -7,6 +7,7 @@ import { TypewriterService } from './services/typewriter.service';
 import { map, Observable, of } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeValue } from '@angular/platform-browser';
 
 @Component({
   selector: `app-root`,
@@ -41,19 +42,22 @@ export class AppComponent implements OnInit{
   @ViewChild(HomeComponent) homeComponent!: HomeComponent
   
   private backgroundImgSrc: string;
-  private textTypeWriter: Observable<string>;
+  private textTypeWriter: Observable<SafeValue>;
   private zoomState: string;
 
   private showText: boolean;
   private zoomedIn: boolean;
   private isMobile: boolean;
 
-  private previousText: Array<string>;
+  private previousText: Array<SafeValue>;
 
   //Inject Service
   private typewriterService: TypewriterService = inject(TypewriterService);
   private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
   private document: Document = inject(DOCUMENT);
+  private sanitizer: DomSanitizer = inject(DomSanitizer);
+  
+  
   inputText: string;
 
   constructor() {
@@ -89,12 +93,12 @@ export class AppComponent implements OnInit{
     // } 
   }
 
-  getTextTypeWriter(): Observable<string> {
+  getTextTypeWriter(): Observable<SafeValue> {
     return this.textTypeWriter;
   }
 
-  getPreviousTexts(): Array<string> {
-    return this.previousText;
+  getPreviousTexts(): Array<SafeValue> {
+    return this.previousText.slice(0, -1);
   }
 
   getBackgroundImg(): string {
@@ -115,13 +119,16 @@ export class AppComponent implements OnInit{
 
   toggleZoomIn(text: string): void {
     this.zoomState = `zoomedIn`;
+    const safeValue: SafeValue = this.sanitizer.sanitize(SecurityContext.HTML, text) ?? ``;
+
+    console.log(`SafeValue: ${safeValue}`);
     if(this.zoomedIn) {
-      this.textTypeWriter = this.typewriterService.getTypewriterEffect([text]).pipe(map((text: string) => {
+      this.textTypeWriter = this.typewriterService.getTypewriterEffect([safeValue]).pipe(map((text: SafeValue) => {
         this.scrollToBottom();
         return text 
       }));
     }
-    this.previousText.push(text);
+    this.previousText.push(safeValue);
   }
 
   toggleZoomOut(): void {
@@ -151,7 +158,6 @@ export class AppComponent implements OnInit{
   }
 
   onSubmit(input: string) {
-    console.log(`Input: ${input}`);
     this.inputText = input;
     this.homeComponent.setText(this.inputText);
     this.inputText = ``;

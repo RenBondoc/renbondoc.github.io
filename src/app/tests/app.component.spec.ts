@@ -6,6 +6,7 @@ import { TypewriterService } from '../services/typewriter.service';
 import { of } from 'rxjs';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HomeComponent } from '../home/home.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 describe(`AppComponent`, () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -14,6 +15,7 @@ describe(`AppComponent`, () => {
   let breakpointObserverMock: { observe: jasmine.Spy };
   let mockBreakpointState: BreakpointState
   let homeComponent: HomeComponent;
+  let sanitizer: DomSanitizer;
 
   beforeEach(async () => {
 
@@ -45,6 +47,7 @@ describe(`AppComponent`, () => {
     component= fixture.componentInstance;
     typewriterService = TestBed.inject(TypewriterService);
     homeComponent = TestBed.createComponent(HomeComponent).componentInstance;
+    sanitizer = TestBed.inject(DomSanitizer);
   });
 
   it(`should create the app`, () => {
@@ -107,7 +110,76 @@ describe(`AppComponent`, () => {
     flush();
     
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(`:~$ ${testText}`);
+    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(testText);
+    expect(component.getShowText()).toBe(true);
+  }));
+
+  it(`should load empty text after toggleZoomIn() with bad HTML string`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    spyOn(sanitizer,`sanitize`).and.returnValue(null);
+
+    const testText: string = ``;
+    spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(``));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    component.toggleZoomIn(testText);
+    fixture.detectChanges();
+
+    // Simulate animation complete event
+    const animationEvent: AnimationEvent = {
+      fromState: `initial`,
+      toState: `zoomedIn`,
+      totalTime: 800, // Animation duration in milliseconds
+      phaseName: `done`,
+      element: ``,
+      triggerName: `zoomAnimation`,
+      disabled: false
+    };
+    component.onAnimationComplete(animationEvent);
+    fixture.detectChanges();
+
+    // Flush all pending observables
+    flush();
+    
+    const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
+    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(testText);
+    expect(component.getShowText()).toBe(true);
+  }));
+
+  it(`should load HTML string as text after toggleZoomIn() with good HTML string`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+
+    const testText: string = `This is a test`;
+    const testTextHtml: string = `<p>${testText}</p>`;
+    spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(testTextHtml));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    component.toggleZoomIn(testTextHtml);
+    fixture.detectChanges();
+
+    // Simulate animation complete event
+    const animationEvent: AnimationEvent = {
+      fromState: `initial`,
+      toState: `zoomedIn`,
+      totalTime: 800, // Animation duration in milliseconds
+      phaseName: `done`,
+      element: ``,
+      triggerName: `zoomAnimation`,
+      disabled: false
+    };
+    component.onAnimationComplete(animationEvent);
+    fixture.detectChanges();
+
+    // Flush all pending observables
+    flush();
+    
+    const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
+    console.log(changedCompiled.querySelector(`span p`));
+    expect(changedCompiled.querySelector(`span p`)?.textContent).toEqual(testText);
     expect(component.getShowText()).toBe(true);
   }));
 
@@ -140,7 +212,7 @@ describe(`AppComponent`, () => {
     fixture.detectChanges();
 
     const changed: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changed.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(`:~$ ${testText}`);
+    expect(changed.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(testText);
 
     // Flush all pending observables
     flush();
@@ -152,8 +224,8 @@ describe(`AppComponent`, () => {
     flush();
     
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(`:~$ ${testText}`);
-    expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(`:~$ ${newText}`);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(testText);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(newText);
     expect(component.getShowText()).toBe(true);
 
   }));
@@ -182,7 +254,7 @@ describe(`AppComponent`, () => {
     fixture.detectChanges();
 
     const changed: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changed.querySelector(`span`)?.textContent).toEqual(`:~$ ${testText}`);
+    expect(changed.querySelector(`span`)?.textContent).toEqual(testText);
     // Flush all pending observables
     flush();
 
@@ -232,7 +304,7 @@ describe(`AppComponent`, () => {
     flush();
 
     const changed: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changed.querySelector(`span`)?.textContent).toEqual(`:~$ ${testText}`);
+    expect(changed.querySelector(`span`)?.textContent).toEqual(testText);
 
     const inputElement: HTMLElement = fixture.nativeElement as HTMLElement;
     const input: HTMLInputElement = inputElement.querySelector(`input`) as HTMLInputElement;
@@ -240,7 +312,7 @@ describe(`AppComponent`, () => {
     component.inputText = testInput;
 
     // Create and dispatch the keyup event
-    const event: KeyboardEvent = new KeyboardEvent(`keyup`, {
+    const event: KeyboardEvent = new KeyboardEvent(`keydown`, {
       key: `Enter`,
       code: `Enter`,
       keyCode: 13,
@@ -253,8 +325,8 @@ describe(`AppComponent`, () => {
     flush();
 
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(`:~$ ${testText}`);
-    expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(`:~$ ${testInput}`);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(testText);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(testInput);
     expect(component.getShowText()).toBe(true);
 
   }));

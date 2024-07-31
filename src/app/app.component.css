@@ -47,7 +47,7 @@
   object-fit: cover;
 }
 
-.text {
+::ng-deep .text {
   text-align: left;
   color: rgb(60, 158, 73);
   font-family: Tahoma, wcp;
@@ -78,4 +78,9 @@
 input {
   background-color: transparent;
   border-color: transparent;
+}
+
+::ng-deep .spanImage {
+  height: 2%;
+  width: 2%;
 }

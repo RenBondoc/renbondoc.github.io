@@ -17,10 +17,10 @@
 <div id="text-container" *ngIf="getShowText()" class="text-container">
   <ul class="text">
     <li *ngFor="let previousText of getPreviousTexts(); let i = index">
-      <span class="text" *ngIf="i < getPreviousTexts().length - 1">:~$ {{ previousText }}</span>
+      :~$ <span class="text" [innerHTML]="previousText"></span>
     </li>
-    <li><span class="text">:~$ {{ getTextTypeWriter() | async }}</span></li>
-    <li>:~$ <input [(ngModel)]="inputText" type="text" class="text" (keyup.enter)="onSubmit(inputText)"></li>
+    <li>:~$ <span class="text" [innerHTML]="getTextTypeWriter() | async"></span></li>
+    <li>:~$ <input [(ngModel)]="inputText" type="text" class="text" (keydown.enter)="onSubmit(inputText)"></li>
   </ul>
 </div>
 

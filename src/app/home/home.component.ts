@@ -1,6 +1,7 @@
-import { animate, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Pipe } from '@angular/core';
+
 
 @Component({
   selector: `app-home`,
@@ -47,6 +48,9 @@ export class HomeComponent {
     switch(type) {
       case `Resume`:
         this.messageEvent.emit(`Downloading resume.....`);
+        break;
+      case `Contact`:
+        this.messageEvent.emit(`Loading contact links....\nLinkedIn <img class="text spanImage" src="../assets/img/linkedin.png"> www.linkedin.com/in/renan-bondoc-7b1a53200\nGitHub: <img class="text spanImage" src="../assets/img/social.png">: https://github.com/RenBondoc\n\nThank you for visiting!`);
         break;
       default:
         this.messageEvent.emit(`You are in the ${type} page now`);

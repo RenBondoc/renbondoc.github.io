@@ -59,6 +59,20 @@ describe(`HomeComponent`, () => {
     );
   });
 
+  it(`should emit Contact text on click`, () => {
+    spyOn(component.messageEvent, `emit`);
+
+    // trigger the click
+    const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
+
+    // Trigger the click on the "About" link
+    const aboutLink: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(4) a`) as HTMLAnchorElement;
+    aboutLink.dispatchEvent(new Event(`click`))
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(`Loading contact links....\nLinkedIn <img class="text spanImage" src="../assets/img/linkedin.png"> www.linkedin.com/in/renan-bondoc-7b1a53200\nGitHub: <img class="text spanImage" src="../assets/img/social.png">: https://github.com/RenBondoc\n\nThank you for visiting!`);
+  });
+
   it(`should emit void on click oh home button`, () => {
     spyOn(component.homeButton, `emit`);
 
