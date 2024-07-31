@@ -52,11 +52,20 @@ export class HomeComponent {
       case `Contact`:
         this.messageEvent.emit(`Loading contact links....\nLinkedIn: <a target="_blank" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200"><img class="text spanImage" src="../assets/img/linkedin.png"></a>\nGitHub: <a target="_blank" href="https://github.com/RenBondoc"><img class="text spanImage" src="../assets/img/social.png"></a>\n\nThank you for visiting!`);
         break;
+      case `About`:
+        this.messageEvent.emit(`You are in the ${type} page now`);
+        break;
+      case `Projects`:
+        this.messageEvent.emit(`You are in the ${type} page now`);
+        break;
       default:
         this.messageEvent.emit(`You are in the ${type} page now`);
         break;
     }
-    this.toggleDropdown();
+    
+    if (this.showDropDown) {
+      this.hideDropdown();
+    }
   }
 
   homeButtonClick(): void {
@@ -67,13 +76,17 @@ export class HomeComponent {
     }
   }
 
+  private async hideDropdown(): Promise<void> {
+    this.animationState = `up`;
+    await new Promise( resolve => setTimeout(resolve, 550) );
+    this.showDropDown = false;
+  }
+
   async toggleDropdown(): Promise<void> {
     //The order of this code matters
     console.log(`Checking dropdown: ${this.showDropDown}`)
     if (this.showDropDown) {
-      this.animationState = `up`;
-      await new Promise( resolve => setTimeout(resolve, 550) );
-      this.showDropDown = false;
+      this.hideDropdown();
     } else {
       this.showDropDown = true;
       this.animationState = `down`;

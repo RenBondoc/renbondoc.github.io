@@ -59,6 +59,22 @@ describe(`HomeComponent`, () => {
     );
   });
 
+  it(`should emit Projects text on click`, () => {
+    spyOn(component.messageEvent, `emit`);
+
+    // trigger the click
+    const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
+
+    // Trigger the click on the "About" link
+    const aboutLink: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(2) a`) as HTMLAnchorElement;
+    aboutLink.dispatchEvent(new Event(`click`))
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(
+      `You are in the Projects page now`
+    );
+  });
+
   it(`should emit Contact text on click`, () => {
     spyOn(component.messageEvent, `emit`);
 
@@ -127,6 +143,32 @@ describe(`HomeComponent`, () => {
     );
 
   });
+
+  it(`should hide dropdown when clicked again`, fakeAsync(() => {
+    spyOn(component.messageEvent, `emit`);
+    component.isMobile = true;
+    fixture.detectChanges();
+
+    // trigger the click
+    const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
+    const menu: HTMLButtonElement = navElement.querySelectorAll(`button`)[1] as HTMLButtonElement;
+    expect(menu).toBeTruthy();
+
+    menu.dispatchEvent(new Event(`click`))
+    fixture.detectChanges();
+
+    expect(component.getDropDown()).toBeTrue();
+    expect(component.getAnimationSate()).toEqual(`down`);
+
+    menu.dispatchEvent(new Event(`click`))
+    tick(550);
+
+    fixture.detectChanges();
+
+    expect(component.getDropDown()).toBeFalse();
+    expect(component.getAnimationSate()).toEqual(`up`);
+
+  }));
 
   it(`should hide dropdown when home button is clicked`, fakeAsync(() => {
     spyOn(component.messageEvent, `emit`);
