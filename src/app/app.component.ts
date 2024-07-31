@@ -119,7 +119,8 @@ export class AppComponent implements OnInit{
 
   toggleZoomIn(text: string): void {
     this.zoomState = `zoomedIn`;
-    const safeValue: SafeValue = this.sanitizer.sanitize(SecurityContext.HTML, text) ?? ``;
+    //Have to change the sanitizers together to be able to allow the HTML sanitize. bypassSecurity allows the LinkedIn link to be sanitized. The SecurityContext.URL returns string for HTML sanitize
+    const safeValue: SafeValue = this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.sanitize(SecurityContext.URL, this.sanitizer.bypassSecurityTrustUrl(text))) ?? ``;
 
     console.log(`SafeValue: ${safeValue}`);
     if(this.zoomedIn) {

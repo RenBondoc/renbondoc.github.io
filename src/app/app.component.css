@@ -51,7 +51,7 @@
   text-align: left;
   color: rgb(60, 158, 73);
   font-family: Tahoma, wcp;
-  font-size: larger;
+  font-size: 120%;
   width: 80%;
 }
 
@@ -81,6 +81,6 @@ input {
 }
 
 ::ng-deep .spanImage {
-  height: 2%;
-  width: 2%;
+  height: 40px;
+  width: 40px;
 }

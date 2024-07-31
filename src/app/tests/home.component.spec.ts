@@ -70,7 +70,7 @@ describe(`HomeComponent`, () => {
     aboutLink.dispatchEvent(new Event(`click`))
 
     fixture.detectChanges();
-    expect(component.messageEvent.emit).toHaveBeenCalledWith(`Loading contact links....\nLinkedIn <img class="text spanImage" src="../assets/img/linkedin.png"> www.linkedin.com/in/renan-bondoc-7b1a53200\nGitHub: <img class="text spanImage" src="../assets/img/social.png">: https://github.com/RenBondoc\n\nThank you for visiting!`);
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(`Loading contact links....\nLinkedIn: <a target="_blank" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200"><img class="text spanImage" src="../assets/img/linkedin.png"></a>\nGitHub: <a target="_blank" href="https://github.com/RenBondoc"><img class="text spanImage" src="../assets/img/social.png"></a>\n\nThank you for visiting!`);
   });
 
   it(`should emit void on click oh home button`, () => {
