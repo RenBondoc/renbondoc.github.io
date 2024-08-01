@@ -11,7 +11,7 @@ body {
 
 @font-face {
   font-family: wcp;
-  src: url(OCR-a___.ttf) format('woff2'),
-       url(OCR-a___.woff) format('woff'),
-       url(OCR-a___.ttf) format('truetype');
+  src: url(./OCR-a___.ttf) format('woff2'),
+       url(./OCR-a___.ttf) format('woff'),
+       url(./OCR-a___.ttf) format('truetype');
 }
