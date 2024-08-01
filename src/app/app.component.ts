@@ -48,6 +48,7 @@ export class AppComponent implements OnInit{
   private showText: boolean;
   private zoomedIn: boolean;
   private isMobile: boolean;
+  private showCoverText: boolean;
 
   private previousText: Array<SafeValue>;
 
@@ -56,6 +57,7 @@ export class AppComponent implements OnInit{
   private breakpointObserver: BreakpointObserver = inject(BreakpointObserver);
   private document: Document = inject(DOCUMENT);
   private sanitizer: DomSanitizer = inject(DomSanitizer);
+  
   
   
   inputText: string;
@@ -69,6 +71,7 @@ export class AppComponent implements OnInit{
     this.isMobile = false;
     this.previousText = [];
     this.inputText = ``;
+    this.showCoverText = true;
   }
 
   ngOnInit(): void {
@@ -119,6 +122,7 @@ export class AppComponent implements OnInit{
 
   toggleZoomIn(text: string): void {
     this.zoomState = `zoomedIn`;
+    this.showCoverText = false;
     //Have to change the sanitizers together to be able to allow the HTML sanitize. bypassSecurity allows the LinkedIn link to be sanitized. The SecurityContext.URL returns string for HTML sanitize
     const safeValue: SafeValue = this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.sanitize(SecurityContext.URL, this.sanitizer.bypassSecurityTrustUrl(text))) ?? ``;
 
@@ -132,10 +136,12 @@ export class AppComponent implements OnInit{
     this.previousText.push(safeValue);
   }
 
-  toggleZoomOut(): void {
+  async toggleZoomOut(): Promise<void> {
     this.showText = false;
     this.previousText = [];
     this.zoomState = `initial`;
+    await new Promise( resolve => setTimeout(resolve, 300) );
+    this.showCoverText = true;
   }
 
   onAnimationComplete(event: AnimationEvent): void {
@@ -162,6 +168,10 @@ export class AppComponent implements OnInit{
     this.inputText = input;
     this.homeComponent.setText(this.inputText);
     this.inputText = ``;
+  }
+
+  isCoverTextHidden() {
+    return this.showCoverText;
   }
   
 }

@@ -84,3 +84,27 @@ input {
   height: 40px;
   width: 40px;
 }
+
+.mobile-cover-text-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 1; 
+  pointer-events: none;
+  margin-top: 30%;
+  margin-left: 15%;
+}
+
+.cover-text-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 1; 
+  pointer-events: none;
+  margin-top: 6%;
+  margin-left: 25%;
+}

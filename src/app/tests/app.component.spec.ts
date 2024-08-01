@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnimationEvent } from '@angular/animations';
@@ -67,8 +67,10 @@ describe(`AppComponent`, () => {
     fixture.detectChanges();
 
     expect(component.getIsMobile()).toBeTrue();
-    //Currently not changing backgroun image, but feature is possible >> Still a work in progress
     expect(component.getBackgroundImg()).toBe(`../assets/img/mobile_background_closeup.jpg`);
+    const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
+    expect(changedCompiled.querySelector(`div p`)?.innerHTML).toEqual(` Click Here! `);
+    expect(component.isCoverTextHidden()).toBeTrue();
   });
 
   it(`should set isMobile to false when handset breakpoint does not match`, () => {
@@ -79,7 +81,70 @@ describe(`AppComponent`, () => {
 
     expect(component.getIsMobile()).toBeFalse();
     expect(component.getBackgroundImg()).toBe(`../assets/img/background.jpg`);
+
+    const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
+    expect(changedCompiled.querySelector(`div p`)?.innerHTML).toEqual(` Click Here! `);
+    expect(component.isCoverTextHidden()).toBeTrue();
   });
+
+  it(`should show Welcome Here once image is clicked and show Click Here when zoomed Out again`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(`Welcome...`));
+    spyOn(component, `toggleZoomIn`).and.callThrough();
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
+    const imgElement: HTMLImageElement = changedCompiled.querySelectorAll(`img`)[1] as HTMLImageElement;
+    console.log(changedCompiled.querySelectorAll(`img`))
+    expect(imgElement).toBeTruthy();
+    imgElement.click();
+
+    fixture.detectChanges();
+    flush();
+
+    // Simulate animation complete event
+    const animationEvent: AnimationEvent = {
+      fromState: `initial`,
+      toState: `zoomedIn`,
+      totalTime: 800, // Animation duration in milliseconds
+      phaseName: `done`,
+      element: ``,
+      triggerName: `zoomAnimation`,
+      disabled: false
+    };
+    component.onAnimationComplete(animationEvent);
+    fixture.detectChanges();
+
+    expect(component.toggleZoomIn).toHaveBeenCalledWith(`Welcome...`);
+    // Flush all pending observables
+    flush();
+    
+    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(`Welcome...`);
+    expect(component.getShowText()).toBe(true);
+    expect(component.isCoverTextHidden()).toBeFalse();
+
+    component.toggleZoomOut();
+
+    const animationEventZoomOut: AnimationEvent = {
+      fromState: `zoomedIn`,
+      toState: `initial`,
+      totalTime: 800, // Animation duration in milliseconds
+      phaseName: `done`,
+      element: ``,
+      triggerName: `zoomAnimation`,
+      disabled: false
+    };
+
+    component.onAnimationComplete(animationEventZoomOut);
+    fixture.detectChanges();
+
+    flush();
+    const changedCompiledZoomedOut: HTMLElement = fixture.nativeElement as HTMLElement;
+    expect(changedCompiledZoomedOut.querySelector(`span`)?.textContent).toBeFalsy();
+    expect(component.getShowText()).toBe(false);
+  }));
 
   it(`should load animated text after toggleZoomIn()`, fakeAsync(() => {
     breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
@@ -271,6 +336,9 @@ describe(`AppComponent`, () => {
     };
     component.onAnimationComplete(animationEventZoomOut);
     fixture.detectChanges();
+
+    flush();
+
     const changedCompiledZoomedOut: HTMLElement = fixture.nativeElement as HTMLElement;
     expect(changedCompiledZoomedOut.querySelector(`span`)?.textContent).toBeFalsy();
     expect(component.getShowText()).toBe(false);
