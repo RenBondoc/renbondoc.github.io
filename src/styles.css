@@ -12,5 +12,6 @@ body {
   background-size: cover;
   /* background-position: center top 25%; */
   background-attachment: fixed;
+  font-family: 'wcp';
 }
 
