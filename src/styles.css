@@ -1,3 +1,8 @@
+@font-face {
+  font-family: wcp;
+  src: url(assets/font/OCRAStd.otf);
+}
+
 /* You can add global styles to this file, and also import other style files */
 body {
   margin: 0px;
@@ -9,9 +14,3 @@ body {
   background-attachment: fixed;
 }
 
-@font-face {
-  font-family: wcp;
-  src: url(./assets/font/OCR-a___.ttf) format('woff2'),
-       url(./assets/font/OCR-a___.ttf) format('woff'),
-       url(./assets/font/OCR-a___.ttf) format('truetype');
-}
