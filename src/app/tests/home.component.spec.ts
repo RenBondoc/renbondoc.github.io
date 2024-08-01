@@ -43,6 +43,51 @@ describe(`HomeComponent`, () => {
     }
   });
 
+  it(`should emit Default text if setText() not called with known command`, () => {
+    spyOn(component.messageEvent, `emit`);
+
+    // trigger the click
+    component.setText(`Unknown`);
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(
+      `The command 'unknown' is not recognised. Enter 'help' to see the available commands.`
+    );
+  });
+
+  it(`should emit '' text if setText() is called with empty string`, () => {
+    spyOn(component.messageEvent, `emit`);
+
+    // trigger the click
+    component.setText(``);
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(``);
+  });
+
+  it(`should emit Help text if setText() is called with 'help'`, () => {
+    spyOn(component.messageEvent, `emit`);
+
+    const helpText: string = `Welcome to the help page!
+      \nThe command you are able to run for now are:
+      > About                  This will navigate you to the 'about' page of the app.
+      > Projects               This will navigate you to the 'projects' page of the app.
+      > Resume                 This will download my resume for you.
+      > Contact                Will show the multiple ways you can get in contact with me.
+
+      There would hopefully be more commands to run in the future, look forward to it!`
+
+    // trigger the click
+    component.setText(`help`);
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(helpText);
+
+    component.setText(`h`);
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(helpText);
+  });
+
   it(`should emit About text on click`, () => {
     spyOn(component.messageEvent, `emit`);
 
@@ -142,6 +187,31 @@ describe(`HomeComponent`, () => {
       `You are in the About page now`
     );
 
+  });
+
+  it(`should emit Help text if setText() is called with 'help' mobile version`, () => {
+    spyOn(component.messageEvent, `emit`);
+    component.isMobile = true;
+    fixture.detectChanges();
+
+    const helpText: string = `Welcome to the help page!
+      \nThe command you are able to run for now are:
+      \n> About                  \nThis will navigate you to the 'about' page of the app.\n
+      \n> Projects               \nThis will navigate you to the 'projects' page of the app.\n
+      \n> Resume                 \nThis will download my resume for you.\n
+      \n> Contact                \nWill show the multiple ways you can get in contact with me.\n
+
+      There would hopefully be more commands to run in the future, look forward to it!`
+
+    // trigger the click
+    component.setText(`help`);
+
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(helpText);
+
+    component.setText(`h`);
+    fixture.detectChanges();
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(helpText);
   });
 
   it(`should hide dropdown when clicked again`, fakeAsync(() => {

@@ -155,7 +155,7 @@ export class AppComponent implements OnInit{
     this.textTypeWriter = this.typewriterService.getTypewriterEffect([this.previousText[this.previousText.length - 1]]).pipe(map((text: string) => text));
   }
   
-  scrollToBottom() {
+  scrollToBottom(): void {
     setTimeout(() => {
       let scrollableDiv: HTMLElement | null = this.document.getElementById(`text-container`);
       if (scrollableDiv) {
@@ -164,14 +164,18 @@ export class AppComponent implements OnInit{
     }, 0);
   }
 
-  onSubmit(input: string) {
+  onSubmit(input: string): void {
     this.inputText = input;
     this.homeComponent.setText(this.inputText);
     this.inputText = ``;
   }
 
-  isCoverTextHidden() {
+  isCoverTextHidden(): boolean {
     return this.showCoverText;
+  }
+
+  getWelcomeText(): string {
+    return `Welcome!\nPlease enter the command 'help' if you would like to see what you are able to do :)`;
   }
   
 }

@@ -43,29 +43,81 @@ export class HomeComponent {
     this.animationState = `up`;
   }
 
-  setText(type: string): void {
+  setText(event: string): void {
 
-    switch(type) {
-      case `Resume`:
+    event = event.toLowerCase();
+
+    switch(event) {
+      case `resume`:
         this.messageEvent.emit(`Downloading resume.....`);
         break;
-      case `Contact`:
-        this.messageEvent.emit(`Loading contact links....\nLinkedIn: <a target="_blank" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200"><img class="text spanImage" src="../assets/img/linkedin.png"></a>\nGitHub: <a target="_blank" href="https://github.com/RenBondoc"><img class="text spanImage" src="../assets/img/social.png"></a>\n\nThank you for visiting!`);
+      case `contact`:
+        this.messageEvent.emit(this.getContactsText());
         break;
-      case `About`:
-        this.messageEvent.emit(`You are in the ${type} page now`);
+      case `about`:
+        this.messageEvent.emit(this.getAboutText());
         break;
-      case `Projects`:
-        this.messageEvent.emit(`You are in the ${type} page now`);
+      case `projects`:
+        this.messageEvent.emit(this.getProjectsText());
+        break;
+      case `help`:
+      case `h`:
+        this.messageEvent.emit(this.getHelpText());
+        break;
+      case ``:
+        this.messageEvent.emit(``);
         break;
       default:
-        this.messageEvent.emit(`You are in the ${type} page now`);
+        this.messageEvent.emit(this.getDefaultText(event));
         break;
     }
     
     if (this.showDropDown) {
       this.hideDropdown();
     }
+  }
+
+  private getAboutText(): string {
+    return `You are in the About page now`;
+
+  }
+
+  private getProjectsText(): string {
+    return `You are in the Projects page now`;
+  }
+
+  private getContactsText(): string {
+    return `Loading contact links....\nLinkedIn: <a target="_blank" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200"><img class="text spanImage" src="../assets/img/linkedin.png"></a>\nGitHub: <a target="_blank" href="https://github.com/RenBondoc"><img class="text spanImage" src="../assets/img/social.png"></a>\n\nThank you for visiting!`;
+  }
+
+  private getDefaultText(text: string): string {
+    return `The command '${text}' is not recognised. Enter 'help' to see the available commands.`
+  }
+
+  private getHelpText(): string {
+    let text: string = ``;
+
+    if(this.isMobile) {
+      text =`Welcome to the help page!
+      \nThe command you are able to run for now are:
+      \n> About                  \nThis will navigate you to the 'about' page of the app.\n
+      \n> Projects               \nThis will navigate you to the 'projects' page of the app.\n
+      \n> Resume                 \nThis will download my resume for you.\n
+      \n> Contact                \nWill show the multiple ways you can get in contact with me.\n
+
+      There would hopefully be more commands to run in the future, look forward to it!`
+    } else {
+      text = `Welcome to the help page!
+      \nThe command you are able to run for now are:
+      > About                  This will navigate you to the 'about' page of the app.
+      > Projects               This will navigate you to the 'projects' page of the app.
+      > Resume                 This will download my resume for you.
+      > Contact                Will show the multiple ways you can get in contact with me.
+
+      There would hopefully be more commands to run in the future, look forward to it!`
+    }
+     
+    return text;
   }
 
   homeButtonClick(): void {
@@ -102,3 +154,4 @@ export class HomeComponent {
   }
 
 }
+

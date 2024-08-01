@@ -89,7 +89,10 @@ describe(`AppComponent`, () => {
 
   it(`should show Welcome Here once image is clicked and show Click Here when zoomed Out again`, fakeAsync(() => {
     breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
-    spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(`Welcome...`));
+
+    const welcomeText: string = `Welcome!\nPlease enter the command 'help' if you would like to see what you are able to do :)`
+
+    spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(welcomeText));
     spyOn(component, `toggleZoomIn`).and.callThrough();
 
     component.ngOnInit();
@@ -117,11 +120,11 @@ describe(`AppComponent`, () => {
     component.onAnimationComplete(animationEvent);
     fixture.detectChanges();
 
-    expect(component.toggleZoomIn).toHaveBeenCalledWith(`Welcome...`);
+    expect(component.toggleZoomIn).toHaveBeenCalledWith(welcomeText);
     // Flush all pending observables
     flush();
     
-    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(`Welcome...`);
+    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(welcomeText);
     expect(component.getShowText()).toBe(true);
     expect(component.isCoverTextHidden()).toBeFalse();
 

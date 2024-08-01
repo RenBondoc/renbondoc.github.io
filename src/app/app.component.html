@@ -8,25 +8,25 @@
     [ngClass]="getIsMobile() ? 'mobile-background-image' : 'background-image'"
     [@zoomAnimation]="getZoomState()"
     (@zoomAnimation.done)="onAnimationComplete($event)"
-    (click)="toggleZoomIn('Welcome...')"
+    (click)="toggleZoomIn(getWelcomeText())"
     [src]="getBackgroundImg()"
   />
+
+  <ng-template #coverText>
+    <div [ngClass]="getIsMobile() ? 'mobile-cover-text-container' : 'cover-text-container'" *ngIf="isCoverTextHidden()">
+      <p class="text"> Click Here! </p>
+    </div>    
+  </ng-template>
 </div>
 
-<div id="text-container" *ngIf="getShowText(); else coverText" class="text-container">
+<div id="text-container" *ngIf="getShowText(); else coverText" [ngClass]="getIsMobile() ? 'mobile-text-container' : 'text-container'">
   <ul class="text">
     <li *ngFor="let previousText of getPreviousTexts(); let i = index">
-      :~$ <span class="text" [innerHTML]="previousText"></span>
+      :~$ <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="previousText"></span>
     </li>
-    <li>:~$ <span class="text" [innerHTML]="getTextTypeWriter() | async"></span></li>
-    <li>:~$ <input [(ngModel)]="inputText" type="text" class="text" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Text>"></li>
+    <li>:~$ <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="getTextTypeWriter() | async"></span></li>
+    <li>:~$ <input [(ngModel)]="inputText" type="text" [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Text>"></li>
   </ul>
 </div>
-
-<ng-template #coverText>
-  <div [ngClass]="getIsMobile() ? 'mobile-cover-text-container' : 'cover-text-container'" *ngIf="isCoverTextHidden()">
-    <p class="text"> Click Here! </p>
-  </div>
-</ng-template>
 
 <router-outlet></router-outlet>
