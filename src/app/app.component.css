@@ -74,6 +74,14 @@ input {
   border-color: transparent;
 }
 
+:-ms-input-placeholder {
+  color: rgb(60, 158, 73);
+}
+
+::-webkit-input-placeholder {
+  color: rgb(60, 158, 73);
+}
+
 ::ng-deep .spanImage {
   height: 40px;
   width: 40px;
