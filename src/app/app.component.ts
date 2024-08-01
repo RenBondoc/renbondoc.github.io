@@ -157,7 +157,7 @@ export class AppComponent implements OnInit{
   
   scrollToBottom(): void {
     setTimeout(() => {
-      let scrollableDiv: HTMLElement | null = this.document.getElementById(`text-container`);
+      let scrollableDiv: HTMLElement | null = this.document.getElementById(`autoScroll`);
       if (scrollableDiv) {
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
       }

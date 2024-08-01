@@ -19,13 +19,17 @@
   </ng-template>
 </div>
 
-<div id="text-container" *ngIf="getShowText(); else coverText" [ngClass]="getIsMobile() ? 'mobile-text-container' : 'text-container'">
+<div id="autoScroll" *ngIf="getShowText(); else coverText" [ngClass]="getIsMobile() ? 'mobile-text-container' : 'text-container'">
   <ul class="text">
     <li *ngFor="let previousText of getPreviousTexts(); let i = index">
-      :~$ <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="previousText"></span>
+      <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="previousText"></span>
     </li>
-    <li>:~$ <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="getTextTypeWriter() | async"></span></li>
-    <li>:~$ <input [(ngModel)]="inputText" type="text" [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Text>"></li>
+    <li>
+      <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="getTextTypeWriter() | async"></span>
+    </li>
+    <li>
+      <input [(ngModel)]="inputText" type="text" [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Text>">
+    </li>
   </ul>
 </div>
 

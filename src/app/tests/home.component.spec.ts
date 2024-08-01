@@ -70,10 +70,10 @@ describe(`HomeComponent`, () => {
 
     const helpText: string = `Welcome to the help page!
       \nThe command you are able to run for now are:
-      > About                  This will navigate you to the 'about' page of the app.
-      > Projects               This will navigate you to the 'projects' page of the app.
-      > Resume                 This will download my resume for you.
-      > Contact                Will show the multiple ways you can get in contact with me.
+      > <a class="dynamicText">About</a>                  This will navigate you to the 'about' page of the app.
+      > <a class="dynamicText">Projects</a>               This will navigate you to the 'projects' page of the app.
+      > <a class="dynamicText">Resume</a>                 This will download my resume for you.
+      > <a class="dynamicText">Contact</a>                Will show the multiple ways you can get in contact with me.
 
       There would hopefully be more commands to run in the future, look forward to it!`
 
@@ -131,7 +131,7 @@ describe(`HomeComponent`, () => {
     aboutLink.dispatchEvent(new Event(`click`))
 
     fixture.detectChanges();
-    expect(component.messageEvent.emit).toHaveBeenCalledWith(`Loading contact links....\nLinkedIn: <a target="_blank" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200"><img class="text spanImage" src="../assets/img/linkedin.png"></a>\nGitHub: <a target="_blank" href="https://github.com/RenBondoc"><img class="text spanImage" src="../assets/img/social.png"></a>\n\nThank you for visiting!`);
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(`Loading contact links....\nLinkedIn: <a target="_blank" class="dynamicText" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200">https://www.linkedin.com/in/renan-bondoc-7b1a53200</a>\nGitHub: <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc">https://github.com/RenBondoc</a>\n\nThank you for visiting!`);
   });
 
   it(`should emit void on click oh home button`, () => {
@@ -196,10 +196,10 @@ describe(`HomeComponent`, () => {
 
     const helpText: string = `Welcome to the help page!
       \nThe command you are able to run for now are:
-      \n> About                  \nThis will navigate you to the 'about' page of the app.\n
-      \n> Projects               \nThis will navigate you to the 'projects' page of the app.\n
-      \n> Resume                 \nThis will download my resume for you.\n
-      \n> Contact                \nWill show the multiple ways you can get in contact with me.\n
+      \n> <a class="dynamicText">About</a>                  \nThis will navigate you to the 'about' page of the app.\n
+      \n> <a class="dynamicText">Projects</a>               \nThis will navigate you to the 'projects' page of the app.\n
+      \n> <a class="dynamicText">Resume</a>                 \nThis will download my resume for you.\n
+      \n> <a class="dynamicText">Contact</a>                \nWill show the multiple ways you can get in contact with me.\n
 
       There would hopefully be more commands to run in the future, look forward to it!`
 
