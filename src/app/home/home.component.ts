@@ -99,7 +99,7 @@ export class HomeComponent {
 
     if(this.isMobile) {
       text =`Welcome to the help page!
-      \nThe command you are able to run for now are:
+      \nThe commands you are able to run for now are:
       \n> <a class="dynamicText">About</a>                  \nThis will navigate you to the 'about' page of the app.\n
       \n> <a class="dynamicText">Projects</a>               \nThis will navigate you to the 'projects' page of the app.\n
       \n> <a class="dynamicText">Resume</a>                 \nThis will download my resume for you.\n
@@ -108,7 +108,7 @@ export class HomeComponent {
       There would hopefully be more commands to run in the future, look forward to it!`
     } else {
       text = `Welcome to the help page!
-      \nThe command you are able to run for now are:
+      \nThe commands you are able to run for now are:
       > <a class="dynamicText">About</a>                  This will navigate you to the 'about' page of the app.
       > <a class="dynamicText">Projects</a>               This will navigate you to the 'projects' page of the app.
       > <a class="dynamicText">Resume</a>                 This will download my resume for you.

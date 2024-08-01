@@ -69,7 +69,7 @@ describe(`HomeComponent`, () => {
     spyOn(component.messageEvent, `emit`);
 
     const helpText: string = `Welcome to the help page!
-      \nThe command you are able to run for now are:
+      \nThe commands you are able to run for now are:
       > <a class="dynamicText">About</a>                  This will navigate you to the 'about' page of the app.
       > <a class="dynamicText">Projects</a>               This will navigate you to the 'projects' page of the app.
       > <a class="dynamicText">Resume</a>                 This will download my resume for you.
@@ -195,7 +195,7 @@ describe(`HomeComponent`, () => {
     fixture.detectChanges();
 
     const helpText: string = `Welcome to the help page!
-      \nThe command you are able to run for now are:
+      \nThe commands you are able to run for now are:
       \n> <a class="dynamicText">About</a>                  \nThis will navigate you to the 'about' page of the app.\n
       \n> <a class="dynamicText">Projects</a>               \nThis will navigate you to the 'projects' page of the app.\n
       \n> <a class="dynamicText">Resume</a>                 \nThis will download my resume for you.\n

@@ -28,7 +28,7 @@
       <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="getTextTypeWriter() | async"></span>
     </li>
     <li>
-      <input [(ngModel)]="inputText" type="text" [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Text>">
+      <input [(ngModel)]="inputText" type="text" [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Command>">
     </li>
   </ul>
 </div>
