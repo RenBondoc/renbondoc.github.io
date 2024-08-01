@@ -76,10 +76,12 @@ input {
 
 :-ms-input-placeholder {
   color: rgb(60, 158, 73);
+  opacity: 90%;
 }
 
 ::-webkit-input-placeholder {
   color: rgb(60, 158, 73);
+  opacity: 90%;
 }
 
 ::ng-deep .spanImage {
