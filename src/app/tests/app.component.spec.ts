@@ -101,7 +101,6 @@ describe(`AppComponent`, () => {
 
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
     const imgElement: HTMLImageElement = changedCompiled.querySelectorAll(`img`)[1] as HTMLImageElement;
-    console.log(changedCompiled.querySelectorAll(`img`))
     expect(imgElement).toBeTruthy();
     imgElement.click();
 
@@ -125,7 +124,7 @@ describe(`AppComponent`, () => {
     // Flush all pending observables
     flush();
     
-    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(welcomeText);
+    expect(changedCompiled.querySelector(`span`)?.textContent).toEqual(`Welcome!\nPlease enter the command 'help' if you would like to see what you are able to do.`);
     expect(component.getShowText()).toBe(true);
     expect(component.isCoverTextHidden()).toBeFalse();
 
@@ -247,7 +246,6 @@ describe(`AppComponent`, () => {
     flush();
     
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    console.log(changedCompiled.querySelector(`span p`));
     expect(changedCompiled.querySelector(`span p`)?.textContent).toEqual(testText);
     expect(component.getShowText()).toBe(true);
   }));
