@@ -91,7 +91,7 @@ describe(`AppComponent`, () => {
   it(`should show Welcome Here once image is clicked and show Click Here when zoomed Out again`, fakeAsync(() => {
     breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
 
-    const welcomeText: string = `Welcome!\nPlease enter the command 'help' if you would like to see what you are able to do :)`
+    const welcomeText: string = `Welcome!\nPlease enter the command <span class="dynamicText">'help'</span> if you would like to see what you are able to do.`
 
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(welcomeText));
     spyOn(component, `toggleZoomIn`).and.callThrough();

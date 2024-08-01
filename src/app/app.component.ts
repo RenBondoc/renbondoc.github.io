@@ -177,7 +177,7 @@ export class AppComponent implements OnInit{
   }
 
   getWelcomeText(): string {
-    return `Welcome!\nPlease enter the command 'help' if you would like to see what you are able to do :)`;
+    return `Welcome!\nPlease enter the command <span class="dynamicText">'help'</span> if you would like to see what you are able to do.`;
   }
   
 }
