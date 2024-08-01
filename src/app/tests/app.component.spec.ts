@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HomeComponent } from '../home/home.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SecurityContext } from '@angular/core';
 
 describe(`AppComponent`, () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -184,7 +185,7 @@ describe(`AppComponent`, () => {
 
   it(`should load empty text after toggleZoomIn() with bad HTML string`, fakeAsync(() => {
     breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
-    spyOn(sanitizer,`sanitize`).and.returnValue(null);
+    spyOn(sanitizer,`sanitize`).and.returnValues(null);
 
     const testText: string = ``;
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(``));
@@ -398,6 +399,63 @@ describe(`AppComponent`, () => {
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
     expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(testText);
     expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(testInput);
+    expect(component.getShowText()).toBe(true);
+
+  }));
+
+  it(`should handled bad HTML string entered value in input and display empty string`, fakeAsync(() => {
+    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    spyOn(homeComponent, 'setText').and.callThrough();
+
+    const testText: string = `This is a test`;
+    const testInput: string = `<script>console.log('This is a test input')</script>`;
+
+    const sanitizeMock: jasmine.Spy = spyOn(sanitizer,`sanitize`);
+    spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(testText));
+    sanitizeMock.and.callThrough();
+
+    component.ngOnInit();
+    //Do a ZoomIn first to trigger the show text
+    component.toggleZoomIn(testText);
+
+    // Simulate animation complete event
+    const animationEventZoomIn: AnimationEvent = {
+      fromState: `initial`,
+      toState: `zoomedIn`,
+      totalTime: 800, // Animation duration in milliseconds
+      phaseName: `done`,
+      element: ``,
+      triggerName: `zoomAnimation`,
+      disabled: false
+    };
+    component.onAnimationComplete(animationEventZoomIn);
+    fixture.detectChanges();
+    flush();
+
+    sanitizeMock.and.returnValue(null);
+
+    const inputElement: HTMLElement = fixture.nativeElement as HTMLElement;
+    const input: HTMLInputElement = inputElement.querySelector(`input`) as HTMLInputElement;
+
+    component.inputText = testInput;
+
+    // Create and dispatch the keyup event
+    const event: KeyboardEvent = new KeyboardEvent(`keydown`, {
+      key: `Enter`,
+      code: `Enter`,
+      keyCode: 13,
+      bubbles: true
+    });
+
+    input.dispatchEvent(event);
+    fixture.detectChanges();
+
+    flush();
+
+    const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
+    expect(component.getPreviousTexts().length).toEqual(2);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[0]?.textContent).toEqual(testText);
+    expect(changedCompiled.querySelectorAll(`ul li span`)[1]?.textContent).toEqual(``);
     expect(component.getShowText()).toBe(true);
 
   }));

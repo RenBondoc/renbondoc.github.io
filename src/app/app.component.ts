@@ -165,7 +165,9 @@ export class AppComponent implements OnInit{
   }
 
   onSubmit(input: string): void {
+    console.log(`onSubmit(): ${input}`)
     this.inputText = input;
+    this.previousText.push(this.sanitizer.sanitize(SecurityContext.HTML, `<span class="dynamicText">${input}</span>`) ?? ``);
     this.homeComponent.setText(this.inputText);
     this.inputText = ``;
   }

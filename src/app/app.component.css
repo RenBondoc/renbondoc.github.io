@@ -95,6 +95,7 @@ input:before {
 
 ::ng-deep .dynamicText {
   color: white;
+  list-style: none;
 }
 
 /* Mobile-specific styles */

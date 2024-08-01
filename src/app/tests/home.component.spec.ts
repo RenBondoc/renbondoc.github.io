@@ -146,23 +146,35 @@ describe(`HomeComponent`, () => {
     expect(component.homeButton.emit).toHaveBeenCalledTimes(1);
   });
 
-  it(`should download resume and print message when resume button is clicked`, () => {
+  it(`should download resume and print message when resume button is clicked`, fakeAsync(() => {
+    const linkElement: HTMLAnchorElement = document.createElement('a');
+    spyOn(document, 'createElement').and.returnValue(linkElement);
     spyOn(component.messageEvent, `emit`);
+    spyOn(component, `triggerResumeDownload`).and.callThrough();
+    spyOn(linkElement, 'click');
+    
+
     // trigger the click
     const navElement: HTMLElement = fixture.nativeElement as HTMLElement;
     const resumeLink: HTMLAnchorElement = navElement.querySelector(`ul li:nth-child(3) a`) as HTMLAnchorElement;
     expect(resumeLink).toBeTruthy();
-    expect(resumeLink.href).toContain(`Renan-Bondoc-Resumev3.pdf`)
-    expect(resumeLink.download).toBe(`ren_bondoc_resume`);
-
 
     resumeLink.dispatchEvent(new Event(`click`))
 
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
-      `Downloading resume.....`
+      `Downloading Resume....`
     );
-  });
+
+    tick(3000);
+
+    expect(component.triggerResumeDownload).toHaveBeenCalled();
+    expect(document.createElement).toHaveBeenCalledWith(`a`);
+    expect(linkElement.href).toContain(`/assets/doc/Renan-Bondoc-Resumev3.pdf`);
+    expect(linkElement.download).toBe(`ren_bondoc_resume.pdf`);
+    expect(linkElement.click).toHaveBeenCalled();
+
+  }));
 
   it(`should show a menu button during mobile view and show a dropdown when clicked`, () => {
     spyOn(component.messageEvent, `emit`);
