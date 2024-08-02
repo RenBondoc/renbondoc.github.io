@@ -51,7 +51,7 @@
 
 .text-container {
   position: fixed;
-  width: 100%;
+  width: 90%;
   height: 80vh;
   margin-top:2%;
   left:3%;
@@ -64,7 +64,6 @@
   padding-bottom: 2%;
   white-space: pre-wrap;
   list-style: outside;
-  width: 100%;
   display: flex;
 }
 
@@ -77,6 +76,7 @@ input {
   border-color: transparent;
   padding-left:10px;
   height: auto;
+  width: 80%;
 }
 
 input:before {

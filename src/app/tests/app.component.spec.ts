@@ -70,7 +70,7 @@ describe(`AppComponent`, () => {
     expect(component.getIsMobile()).toBeTrue();
     expect(component.getBackgroundImg()).toBe(`../assets/img/mobile_background_closeup.jpg`);
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelector(`div p`)?.innerHTML).toEqual(` Click Here! `);
+    expect(changedCompiled.querySelector(`div p`)?.textContent).toEqual(`Welcome to Renan's PortfolioClick Here to Start`);
     expect(component.isCoverTextHidden()).toBeTrue();
   });
 
@@ -84,7 +84,7 @@ describe(`AppComponent`, () => {
     expect(component.getBackgroundImg()).toBe(`../assets/img/background.jpg`);
 
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
-    expect(changedCompiled.querySelector(`div p`)?.innerHTML).toEqual(` Click Here! `);
+    expect(changedCompiled.querySelector(`div p`)?.textContent).toEqual(`Welcome to Renan's PortfolioClick Here to Start`);
     expect(component.isCoverTextHidden()).toBeTrue();
   });
 

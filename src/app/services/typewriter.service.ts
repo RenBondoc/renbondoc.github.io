@@ -41,7 +41,7 @@ export class TypewriterService {
     const text: string = this.sanitizer.sanitize(SecurityContext.HTML, word) ?? ``;
     const typeString: TypeParams = {
       word: text,
-      speed: 50,
+      speed: 30,
     };
 
     return concat(

@@ -88,7 +88,23 @@ export class HomeComponent {
   }
 
   private getProjectsText(): string {
-    return `You are in the Projects page now`;
+    return `Welcome to my Projects!
+    
+
+    <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc/renbondoc.github.io">Portfolio</a>
+            This is a simple angular application I made to get more familiar working with front-end applications.
+            This project allowed me to learn a few more things working on an angular application.
+            The main goal for this was to get a 100% code coverage with the unit testing.
+            Challenge myself by being able to test the web application's full functionality.
+
+            The web application was inspired to be the ubuntu's/OSX terminal system and the windows' command prompt.
+            If you're viewing this on mobile, try looking at the desktop view. 
+
+
+    I promise more projects are coming in soon!
+
+    PS: I do plan to add some easter eggs around this app, so please do check up once in a while.
+    `;
   }
 
   private getContactsText(): string {
