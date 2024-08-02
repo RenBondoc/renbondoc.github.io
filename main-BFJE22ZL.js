@@ -28,7 +28,7 @@ ${n.map((r,i)=>`${i+1}) ${r.toString()}`).join(`
 LinkedIn: <a target="_blank" class="dynamicText" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200">https://www.linkedin.com/in/renan-bondoc-7b1a53200</a>
 GitHub: <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc">https://github.com/RenBondoc</a>
 
-Thank you for visiting!`}getDefaultText(r){return`The command '${r}' is not recognised. Enter 'help' to see the available commands.`}getResumeText(){return"Downloading Resume...."}triggerResumeDownload(){setTimeout(()=>{let r=document.createElement("a");r.href="../../assets/doc/Renan-Bondoc-Resumev3.pdf",r.download="ren_bondoc_resume.pdf",r.target="_blank",r.click()},2500)}getHelpText(){let r="";return this.isMobile?r=`Welcome to the help page!
+Thank you for visiting!`}getDefaultText(r){return`The command '${r}' is not recognised. Enter <span class="dynamicText">'help'</span> to see the available commands.`}getResumeText(){return"Downloading Resume...."}triggerResumeDownload(){setTimeout(()=>{let r=document.createElement("a");r.href="../../assets/doc/Renan-Bondoc-Resumev3.pdf",r.download="ren_bondoc_resume.pdf",r.target="_blank",r.click()},2500)}getHelpText(){let r="";return this.isMobile?r=`Welcome to the help page!
       
 The commands you are able to run for now are:
       
