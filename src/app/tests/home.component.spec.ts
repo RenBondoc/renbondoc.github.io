@@ -51,7 +51,7 @@ describe(`HomeComponent`, () => {
 
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
-      `The command 'unknown' is not recognised. Enter 'help' to see the available commands.`
+      `The command 'unknown' is not recognised. Enter <span class="dynamicText">'help'</span> to see the available commands.`
     );
   });
 

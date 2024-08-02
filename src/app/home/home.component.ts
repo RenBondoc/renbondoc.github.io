@@ -115,7 +115,7 @@ export class HomeComponent {
   }
 
   private getDefaultText(text: string): string {
-    return `The command '${text}' is not recognised. Enter 'help' to see the available commands.`;
+    return `The command '${text}' is not recognised. Enter <span class="dynamicText">'help'</span> to see the available commands.`;
   }
 
   private getResumeText(): string {
