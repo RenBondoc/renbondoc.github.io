@@ -68,32 +68,34 @@ export class AppComponent implements OnInit{
     this.textTypeWriter = of(``)
     this.showText = false;
     this.zoomedIn = false;
-    this.isMobile = false;
     this.previousText = [];
     this.inputText = ``;
     this.showCoverText = true;
+    this.isMobile = this.checkMobileView();
   }
 
   ngOnInit(): void {
+    this.isMobile = this.checkMobileView();
+  }
+
+  private checkMobileView(): boolean {
+    let isMobileView: boolean = false;
+
     this.breakpointObserver.observe([
       Breakpoints.Handset
     ]).subscribe(result => {
       if (result.matches) {
-        this.isMobile = true;
+        isMobileView = true;
         console.log(`Using Mobile View`);
         this.backgroundImgSrc = `../assets/img/mobile_background_closeup.jpg`;
       } else {
-        this.isMobile = false;
+        isMobileView = false;
         console.log(`Using Desktop View`);
         this.backgroundImgSrc = `../assets/img/background.jpg`;
       }
     });
-  }
 
-  ngAfterViewChecked(): void {
-    // if (this.showText) {
-    //   this.scrollToBottom();
-    // } 
+    return isMobileView;
   }
 
   getTextTypeWriter(): Observable<SafeValue> {

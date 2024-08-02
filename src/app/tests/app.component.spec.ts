@@ -13,21 +13,18 @@ describe(`AppComponent`, () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let typewriterService: TypewriterService;
-  let breakpointObserverMock: { observe: jasmine.Spy };
-  let mockBreakpointState: BreakpointState
+  let breakpointObserverMock: jasmine.Spy;
+  let mockBreakpointState: BreakpointState;
   let homeComponent: HomeComponent;
   let sanitizer: DomSanitizer;
+  let breakpointObserver: BreakpointObserver;
 
-  beforeEach(async () => {
-
-    breakpointObserverMock = {
-      observe: jasmine.createSpy(`observe`)
-    };
+  beforeEach(async () => {;
 
     mockBreakpointState = {
       matches: false,
       breakpoints: {
-        '(max-width: 599px)': false
+        '(max-width: 899px)': false
       }
     };
 
@@ -39,16 +36,20 @@ describe(`AppComponent`, () => {
       ],
       providers: [
         TypewriterService,
-        { provide: BreakpointObserver, useValue: breakpointObserverMock },
+        BreakpointObserver
       ]
     }).compileComponents();
 
-
     fixture = TestBed.createComponent(AppComponent);
-    component= fixture.componentInstance;
+    component = fixture.componentInstance;
     typewriterService = TestBed.inject(TypewriterService);
     homeComponent = TestBed.createComponent(HomeComponent).componentInstance;
     sanitizer = TestBed.inject(DomSanitizer);
+    breakpointObserver = TestBed.inject(BreakpointObserver);
+
+    // 
+
+    breakpointObserverMock = spyOn(breakpointObserver, `observe`).and.returnValue(of(mockBreakpointState));
   });
 
   it(`should create the app`, () => {
@@ -62,7 +63,7 @@ describe(`AppComponent`, () => {
         '(max-width: 599px)': true
       }
     };
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    breakpointObserverMock.and.returnValue(of(mockBreakpointState));
 
     component.ngOnInit();
     fixture.detectChanges();
@@ -75,7 +76,6 @@ describe(`AppComponent`, () => {
   });
 
   it(`should set isMobile to false when handset breakpoint does not match`, () => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
 
     component.ngOnInit();
     fixture.detectChanges();
@@ -89,7 +89,6 @@ describe(`AppComponent`, () => {
   });
 
   it(`should show Welcome Here once image is clicked and show Click Here when zoomed Out again`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
 
     const welcomeText: string = `Welcome!\nPlease enter the command <span class="dynamicText">'help'</span> if you would like to see what you are able to do.`
 
@@ -150,7 +149,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should load animated text after toggleZoomIn()`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
 
     const testText: string = `This is a test`;
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(testText));
@@ -183,7 +182,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should load empty text after toggleZoomIn() with bad HTML string`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
     spyOn(sanitizer,`sanitize`).and.returnValues(null);
 
     const testText: string = ``;
@@ -217,7 +216,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should load HTML string as text after toggleZoomIn() with good HTML string`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
 
     const testText: string = `This is a test`;
     const testTextHtml: string = `<p>${testText}</p>`;
@@ -251,7 +250,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should change text without animation a second toggleZoomIn()`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
 
     component.ngOnInit();
 
@@ -298,7 +297,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should remove text after toggleZoomOut()`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
 
     const testText: string = `This is a test`;
     spyOn(typewriterService, `getTypewriterEffect`).and.returnValue(of(testText));
@@ -348,7 +347,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`add the entered value in input to the text array and display`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
     spyOn(homeComponent, 'setText').and.callThrough();
 
     const testText: string = `This is a test`;
@@ -402,7 +401,7 @@ describe(`AppComponent`, () => {
   }));
 
   it(`should handled bad HTML string entered value in input and display empty string`, fakeAsync(() => {
-    breakpointObserverMock.observe.and.returnValue(of(mockBreakpointState));
+    
     spyOn(homeComponent, 'setText').and.callThrough();
 
     const testText: string = `This is a test`;

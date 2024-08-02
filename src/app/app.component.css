@@ -27,7 +27,8 @@
   display: flex;
   z-index: 1; 
   pointer-events: none;
-  top: 20%; left: 25%;
+  top: 20%; 
+  left: 25%;
 }
 
 .background-image {
@@ -123,8 +124,8 @@ input:before {
   display: flex;
   z-index: 0; 
   pointer-events: none;
-  margin-top: 15%;
-  left: 15%;
+  top: 18%;
+  left: 13%;
 }
 
 .mobile-text-container {
