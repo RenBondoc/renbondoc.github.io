@@ -7,19 +7,13 @@ nav {
   display: flex;
   justify-content: center;
   list-style: none;
-  margin: 0 auto;
-}
-
-.navBar {
-  padding: 0;
-  margin: 0;
 }
 
 .navBar li {
   display: inline;
   padding: 2%;
   padding-left: 15px;
-  margin: 0;
+  padding-right: 15px;
 }
 
 .navBar li a {
@@ -31,8 +25,8 @@ nav {
 }
 
 button {
-  height: 60px;
-  width: 60px;
+  height: auto;
+  width: 80px;
   float: left;
   margin-right: auto;
   border: none;
