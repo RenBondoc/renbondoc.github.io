@@ -63,7 +63,7 @@ export class AppComponent implements OnInit{
   inputText: string;
 
   constructor() {
-    this.backgroundImgSrc = `../assets/img/background.jpg`;
+    this.backgroundImgSrc = `../assets/img/background-zoomed.jpg`;
     this.zoomState = `initial`;
     this.textTypeWriter = of(``)
     this.showText = false;
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit{
       } else {
         isMobileView = false;
         console.log(`Using Desktop View`);
-        this.backgroundImgSrc = `../assets/img/background.jpg`;
+        this.backgroundImgSrc = `../assets/img/background-zoomed.jpg`;
       }
     });
 

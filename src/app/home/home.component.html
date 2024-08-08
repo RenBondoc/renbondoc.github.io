@@ -8,27 +8,21 @@
             <li><a (click)="setText('Contact')">Contact</a></li>
         </ul>
     </nav>
-    <ng-template #dropDown>
+</div>
 
-        <div class="wrapper">
-            <button class="dropbtn" (click)="toggleDropdown()">
-                <img src="../../assets/img/menu.png">
-            </button>
-        </div>
-        
-        <div class="dropdown" [@slideAnimation]="getAnimationSate()" >
+<ng-template #dropDown>
+    <button class="dropbtn" (click)="toggleDropdown()">menu</button>
+    <div class="dropdown" [@slideAnimation]="getAnimationSate()" >
+        <nav class="dropdownNav">
             <ul *ngIf="getDropDown()" class="dropdown-content">
                 <li><a (click)="setText('About')">About</a></li>
                 <li><a (click)="setText('Projects')">Projects</a></li>
                 <li><a (click)="setText('Resume')">Resume</a></li>
                 <li><a (click)="setText('Contact')">Contact</a></li>
             </ul>
-        </div>
-        
-        
-     
-    </ng-template>
-</div>
+        </nav>
+    </div> 
+</ng-template>
 
 
 

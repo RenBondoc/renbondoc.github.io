@@ -81,7 +81,7 @@ describe(`AppComponent`, () => {
     fixture.detectChanges();
 
     expect(component.getIsMobile()).toBeFalse();
-    expect(component.getBackgroundImg()).toBe(`../assets/img/background.jpg`);
+    expect(component.getBackgroundImg()).toBe(`../assets/img/background-zoomed.jpg`);
 
     const changedCompiled: HTMLElement = fixture.nativeElement as HTMLElement;
     expect(changedCompiled.querySelector(`div p`)?.textContent).toEqual(`Welcome to Renan's PortfolioClick Here to Start`);

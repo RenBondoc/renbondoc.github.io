@@ -19,17 +19,17 @@ import { Component, EventEmitter, inject, Input, Output, Pipe } from '@angular/c
       state(
         `up`,
         style({
-          transform: `translateY(-300px)`,
+          'left': '100%',
         })
       ),
       state(
         `down`,
         style({
-          transform: `translateY(0px)`,
+          'left': '0%'
         })
       ),
-      transition(`up => down`, [animate(`0.5s`)]),
-      transition(`down => up`, [animate(`0.5s`)]),
+      transition(`up => down`, [animate(`0.5s ease-in`)]),
+      transition(`down => up`, [animate(`0.5s ease-out`)]),
     ]),
   ],
 })
