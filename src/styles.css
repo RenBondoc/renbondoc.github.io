@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'wcp';
-  src: url("./assets/font/OCR\ A\ Extended\ V2.ttf") format("truetype"),
-  url("./assets/font/OCR\ A\ Extended\ V2.woff") format("woff"),
-  url("./assets/font/OCR\ A\ Extended\ V2.woff2") format("woff2")
+  src: url("./assets/font/OCRAV2.ttf") format("truetype"),
+  url("./assets/font/OCRAV2.woff") format("woff"),
+  url("./assets/font/OCRAV2.woff2") format("woff2")
 }
 
 /* You can add global styles to this file, and also import other style files */
