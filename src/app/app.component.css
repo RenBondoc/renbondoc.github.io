@@ -42,7 +42,7 @@
 ::ng-deep .text {
   text-align: left;
   color: rgb(60, 158, 73);
-  font-family: Tahoma, 'wcp';
+  font-family: 'wcp';
   font-size: 120%;
   width: 100%;
 }
@@ -147,7 +147,7 @@ input:before {
 ::ng-deep .mobile-text {
   text-align: left;
   color: rgb(60, 158, 73);
-  font-family: Tahoma, 'wcp';
+  font-family: 'wcp';
   font-size: 100%;
   width: 80%;
 }
