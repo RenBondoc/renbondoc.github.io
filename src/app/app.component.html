@@ -1,11 +1,14 @@
 <header>
-  <app-home [isMobile]="getIsMobile()" (messageEvent)="toggleZoomIn($event)" (homeButton)="toggleZoomOut()"></app-home>
+  <app-home
+    [isMobile]="getIsMobile()"
+    (messageEvent)="toggleZoomIn($event)"
+    (homeButton)="toggleZoomOut()"
+  ></app-home>
 </header>
 
 <!-- Main content area -->
-<div [ngClass]="getIsMobile() ? 'mobile-container' : 'content-container'">
+<div class="content-container">
   <img
-    [ngClass]="getIsMobile() ? 'mobile-background-image' : 'background-image'"
     [@zoomAnimation]="getZoomState()"
     (@zoomAnimation.done)="onAnimationComplete($event)"
     (click)="toggleZoomIn(getWelcomeText())"
@@ -13,24 +16,48 @@
   />
 
   <ng-template #coverText>
-    <div [ngClass]="getIsMobile() ? 'mobile-cover-text-container' : 'cover-text-container'" *ngIf="isCoverTextHidden()">
-      <p class="text">Welcome to Renan's Portfolio<br><br>Click Here to Start</p>
-    </div>    
+    <div
+      class="cover-text-container"
+      [ngClass]="
+        getIsMobile()
+          ? 'mobile-cover-text-container'
+          : 'desktop-cover-text-container'
+      "
+      *ngIf="isCoverTextHidden()"
+    >
+      <p class="text">Welcome to Renan's Portfolio<br /><br />Click Here to Start</p>
+    </div>
   </ng-template>
-</div>
 
-<div id="autoScroll" *ngIf="getShowText(); else coverText" [ngClass]="getIsMobile() ? 'mobile-text-container' : 'text-container'">
-  <ul class="text">
-    <li *ngFor="let previousText of getPreviousTexts(); let i = index">
-      <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="previousText"></span>
-    </li>
-    <li>
-      <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="getTextTypeWriter() | async"></span>
-    </li>
-    <li>
-      <input [(ngModel)]="inputText" type="text" [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" (keydown.enter)="onSubmit(inputText)" placeholder="<Enter Command>">
-    </li>
-  </ul>
+  <div
+    id="autoScroll"
+    *ngIf="getShowText(); else coverText"
+    class="text-container"
+  >
+    <ul>
+      <li *ngFor="let previousText of getPreviousTexts(); let i = index">
+        <span
+          [ngClass]="getIsMobile() ? 'mobile-text' : 'text'"
+          [innerHTML]="previousText"
+        ></span>
+      </li>
+      <li>
+        <span
+          [ngClass]="getIsMobile() ? 'mobile-text' : 'text'"
+          [innerHTML]="getTextTypeWriter() | async"
+        ></span>
+      </li>
+      <li>
+        <input
+          [(ngModel)]="inputText"
+          type="text"
+          [ngClass]="getIsMobile() ? 'mobile-text' : 'text'"
+          (keydown.enter)="onSubmit(inputText)"
+          placeholder="<Enter Command>"
+        />
+      </li>
+    </ul>
+  </div>
 </div>
 
 <router-outlet></router-outlet>

@@ -11,7 +11,7 @@
 </div>
 
 <ng-template #dropDown>
-    <button class="dropbtn" (click)="toggleDropdown()">menu</button>
+    <button (click)="toggleDropdown()">menu</button>
     <div class="dropdown" [@slideAnimation]="getAnimationSate()" >
         <nav class="dropdownNav">
             <ul *ngIf="getDropDown()" class="dropdown-content">
