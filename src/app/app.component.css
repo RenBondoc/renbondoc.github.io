@@ -50,7 +50,6 @@ img {
     list-style: outside;
   }
 
-
   @media only screen and (max-width: 600px) {
     li {
       padding-bottom: 10%;
@@ -59,7 +58,12 @@ img {
       display: flex;
     }
   }
+}
 
+@media only screen and (max-width: 600px) {
+  .text-container {
+    height: 80vh;
+  }
 }
 
 li:before {
@@ -89,7 +93,8 @@ input {
 }
 
 /* Text classes */
-::ng-deep .text, ul,
+::ng-deep .text,
+ul,
 .mobile-text {
   text-align: left;
   color: rgb(60, 158, 73);
@@ -111,22 +116,19 @@ input {
   width: 80%;
 }
 
- /* width */
- ::-webkit-scrollbar {
+/* Scroll bar css */
+::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-} 
+}
