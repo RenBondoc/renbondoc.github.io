@@ -36,9 +36,11 @@ img {
   width: 90%;
   top: 4%;
   left: 2%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: scroll;
   display: inline;
+  height: 85vh;
+  line-height: 1.5;
+  line-break: auto;
 
   li {
     padding-bottom: 2%;

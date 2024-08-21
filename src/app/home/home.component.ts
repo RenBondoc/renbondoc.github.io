@@ -6,7 +6,14 @@ import {
   trigger,
 } from '@angular/animations';
 import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output, Pipe } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  Pipe,
+} from '@angular/core';
 
 @Component({
   selector: `app-home`,
@@ -19,13 +26,13 @@ import { Component, EventEmitter, inject, Input, Output, Pipe } from '@angular/c
       state(
         `up`,
         style({
-          'left': '100%',
+          left: '100%',
         })
       ),
       state(
         `down`,
         style({
-          'left': '0%'
+          left: '0%',
         })
       ),
       transition(`up => down`, [animate(`0.5s ease-in`)]),
@@ -57,7 +64,7 @@ export class HomeComponent {
         this.messageEvent.emit(this.getResumeText());
         this.triggerResumeDownload();
         break;
-      case `contact`:
+      case `contacts`:
         this.messageEvent.emit(this.getContactsText());
         break;
       case `about`:
@@ -84,18 +91,37 @@ export class HomeComponent {
   }
 
   private getAboutText(): string {
-    return `You are in the About page now`;
+    return `<span class="dynamicText">about</span>
+    
+    Hi there! I'm <span class="dynamicText">Renan</span>, a dedicated software developer with a Bachelor of Science in Computing from Curtin University. 
+    My journey in the tech world has been fueled by a passion for problem-solving and a love for coding. 
+    I specialize in back-end software development, where I thrive on creating robust, efficient solutions and adhering to best practices through a test-driven development approach.
+    
+    With a strong foundation in full-stack development, I excel in both front-end and back-end technologies. 
+    Currently, TypeScript is my primary language, but I’m well-versed in Java, Python, Bash scripting, and have a solid understanding of C++. 
+    My experience also extends to SQL and databasing, enhancing my ability to build comprehensive software solutions. 
+    I favor Ubuntu for my development work but am also proficient with Windows and macOS.
+    
+    While I’m still new to mobile development, particularly iOS, I am actively working on personal projects to expand my skill set in this area. 
+    I thrive in dynamic, high-pressure environments, where my adaptability, time management skills, and dedication shine.
+    
+    Outside of the coding world, I am an avid gamer who enjoys multiplayer and co-op experiences, and I stay active through cycling, basketball, and volleyball. 
+    My enthusiasm for technology extends beyond work—I am genuinely fascinated by the software that makes our lives easier and more enjoyable.
+    
+    Feel free to explore my portfolio to see some of the projects I've worked on and learn more about my professional journey. Thanks for visiting!`;
   }
 
   private getProjectsText(): string {
-    return `Welcome to my Projects!
+    return `<span class="dynamicText">projects</span>
+    
+    Welcome to my Projects!
     
 
     <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc/renbondoc.github.io">Portfolio</a>
             This is a simple angular application I made to get more familiar working with front-end applications.
-            This project allowed me to learn a few more things with the angular framework.
-            The main goal for this was to get a 100% code coverage with the unit testing.
-            Challenge myself by being able to test the web application's full functionality.
+            This project was for me to explore and showcase my angular, html and css knowledge.
+            The main goal for this was to get a 100% code coverage with the unit testing, testing as much of the functionality as possible.
+            I wanted to challenge myself by being able to test the web application's full functionality.
 
             The web application was inspired to be the ubuntu's/OSX terminal system and the windows' command prompt.
             If you're viewing this on mobile, try looking at the desktop view.
@@ -111,7 +137,14 @@ export class HomeComponent {
   }
 
   private getContactsText(): string {
-    return `Loading contact links....\nLinkedIn: <a target="_blank" class="dynamicText" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200">https://www.linkedin.com/in/renan-bondoc-7b1a53200</a>\nGitHub: <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc">https://github.com/RenBondoc</a>\n\nThank you for visiting!`;
+    return `<span class="dynamicText">contacts</span>
+    
+    Loading contact links....
+    
+    LinkedIn: <a target="_blank" class="dynamicText" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200">https://www.linkedin.com/in/renan-bondoc-7b1a53200</a>
+    GitHub: <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc">https://github.com/RenBondoc</a>
+    
+    Thank you for visiting!`;
   }
 
   private getDefaultText(text: string): string {
@@ -119,9 +152,11 @@ export class HomeComponent {
   }
 
   private getResumeText(): string {
-    return `Downloading Resume....`;
+    return `<span class="dynamicText">resume</span>
+    
+    Downloading Resume....`;
   }
-  
+
   triggerResumeDownload(): void {
     setTimeout(() => {
       const link: HTMLAnchorElement = document.createElement(`a`);
@@ -141,7 +176,7 @@ export class HomeComponent {
       \n> <a class="dynamicText">About</a>                  \nThis will navigate you to the 'about' page of the app.\n
       \n> <a class="dynamicText">Projects</a>               \nThis will navigate you to the 'projects' page of the app.\n
       \n> <a class="dynamicText">Resume</a>                 \nThis will download my resume for you.\n
-      \n> <a class="dynamicText">Contact</a>                \nWill show the multiple ways you can get in contact with me.\n
+      \n> <a class="dynamicText">Contacts</a>                \nWill show the multiple ways you can get in contact with me.\n
 
       There would hopefully be more commands to run in the future, look forward to it!`;
     } else {
@@ -150,7 +185,7 @@ export class HomeComponent {
       > <a class="dynamicText">About</a>                  This will navigate you to the 'about' page of the app.
       > <a class="dynamicText">Projects</a>               This will navigate you to the 'projects' page of the app.
       > <a class="dynamicText">Resume</a>                 This will download my resume for you.
-      > <a class="dynamicText">Contact</a>                Will show the multiple ways you can get in contact with me.
+      > <a class="dynamicText">Contacts</a>                Will show the multiple ways you can get in contact with me.
 
       There would hopefully be more commands to run in the future, look forward to it!`;
     }

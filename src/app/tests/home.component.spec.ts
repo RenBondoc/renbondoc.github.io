@@ -37,7 +37,7 @@ describe(`HomeComponent`, () => {
       expect(listItems[0].textContent).toEqual(`About`);
       expect(listItems[1].textContent).toEqual(`Projects`);
       expect(listItems[2].textContent).toEqual(`Resume`);
-      expect(listItems[3].textContent).toEqual(`Contact`);
+      expect(listItems[3].textContent).toEqual(`Contacts`);
     } else {
       expect(listItems).toBeTruthy();
     }
@@ -73,7 +73,7 @@ describe(`HomeComponent`, () => {
       > <a class="dynamicText">About</a>                  This will navigate you to the 'about' page of the app.
       > <a class="dynamicText">Projects</a>               This will navigate you to the 'projects' page of the app.
       > <a class="dynamicText">Resume</a>                 This will download my resume for you.
-      > <a class="dynamicText">Contact</a>                Will show the multiple ways you can get in contact with me.
+      > <a class="dynamicText">Contacts</a>                Will show the multiple ways you can get in contact with me.
 
       There would hopefully be more commands to run in the future, look forward to it!`
 
@@ -100,7 +100,24 @@ describe(`HomeComponent`, () => {
 
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
-      `You are in the About page now`
+      `<span class="dynamicText">about</span>
+    
+    Hi there! I'm <span class="dynamicText">Renan</span>, a dedicated software developer with a Bachelor of Science in Computing from Curtin University. 
+    My journey in the tech world has been fueled by a passion for problem-solving and a love for coding. 
+    I specialize in back-end software development, where I thrive on creating robust, efficient solutions and adhering to best practices through a test-driven development approach.
+    
+    With a strong foundation in full-stack development, I excel in both front-end and back-end technologies. 
+    Currently, TypeScript is my primary language, but I’m well-versed in Java, Python, Bash scripting, and have a solid understanding of C++. 
+    My experience also extends to SQL and databasing, enhancing my ability to build comprehensive software solutions. 
+    I favor Ubuntu for my development work but am also proficient with Windows and macOS.
+    
+    While I’m still new to mobile development, particularly iOS, I am actively working on personal projects to expand my skill set in this area. 
+    I thrive in dynamic, high-pressure environments, where my adaptability, time management skills, and dedication shine.
+    
+    Outside of the coding world, I am an avid gamer who enjoys multiplayer and co-op experiences, and I stay active through cycling, basketball, and volleyball. 
+    My enthusiasm for technology extends beyond work—I am genuinely fascinated by the software that makes our lives easier and more enjoyable.
+    
+    Feel free to explore my portfolio to see some of the projects I've worked on and learn more about my professional journey. Thanks for visiting!`
     );
   });
 
@@ -116,14 +133,16 @@ describe(`HomeComponent`, () => {
 
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
-      `Welcome to my Projects!
+      `<span class="dynamicText">projects</span>
+    
+    Welcome to my Projects!
     
 
     <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc/renbondoc.github.io">Portfolio</a>
             This is a simple angular application I made to get more familiar working with front-end applications.
-            This project allowed me to learn a few more things with the angular framework.
-            The main goal for this was to get a 100% code coverage with the unit testing.
-            Challenge myself by being able to test the web application's full functionality.
+            This project was for me to explore and showcase my angular, html and css knowledge.
+            The main goal for this was to get a 100% code coverage with the unit testing, testing as much of the functionality as possible.
+            I wanted to challenge myself by being able to test the web application's full functionality.
 
             The web application was inspired to be the ubuntu's/OSX terminal system and the windows' command prompt.
             If you're viewing this on mobile, try looking at the desktop view.
@@ -139,7 +158,7 @@ describe(`HomeComponent`, () => {
     );
   });
 
-  it(`should emit Contact text on click`, () => {
+  it(`should emit Contacts text on click`, () => {
     spyOn(component.messageEvent, `emit`);
 
     // trigger the click
@@ -150,7 +169,16 @@ describe(`HomeComponent`, () => {
     aboutLink.dispatchEvent(new Event(`click`))
 
     fixture.detectChanges();
-    expect(component.messageEvent.emit).toHaveBeenCalledWith(`Loading contact links....\nLinkedIn: <a target="_blank" class="dynamicText" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200">https://www.linkedin.com/in/renan-bondoc-7b1a53200</a>\nGitHub: <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc">https://github.com/RenBondoc</a>\n\nThank you for visiting!`);
+    expect(component.messageEvent.emit).toHaveBeenCalledWith(
+      `<span class="dynamicText">contacts</span>
+    
+    Loading contact links....
+    
+    LinkedIn: <a target="_blank" class="dynamicText" href="https://www.linkedin.com/in/renan-bondoc-7b1a53200">https://www.linkedin.com/in/renan-bondoc-7b1a53200</a>
+    GitHub: <a target="_blank" class="dynamicText" href="https://github.com/RenBondoc">https://github.com/RenBondoc</a>
+    
+    Thank you for visiting!`
+    );
   });
 
   it(`should emit void on click oh home button`, () => {
@@ -182,7 +210,9 @@ describe(`HomeComponent`, () => {
 
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
-      `Downloading Resume....`
+      `<span class="dynamicText">resume</span>
+    
+    Downloading Resume....`
     );
 
     tick(3000);
@@ -215,7 +245,24 @@ describe(`HomeComponent`, () => {
 
     fixture.detectChanges();
     expect(component.messageEvent.emit).toHaveBeenCalledWith(
-      `You are in the About page now`
+      `<span class="dynamicText">about</span>
+    
+    Hi there! I'm <span class="dynamicText">Renan</span>, a dedicated software developer with a Bachelor of Science in Computing from Curtin University. 
+    My journey in the tech world has been fueled by a passion for problem-solving and a love for coding. 
+    I specialize in back-end software development, where I thrive on creating robust, efficient solutions and adhering to best practices through a test-driven development approach.
+    
+    With a strong foundation in full-stack development, I excel in both front-end and back-end technologies. 
+    Currently, TypeScript is my primary language, but I’m well-versed in Java, Python, Bash scripting, and have a solid understanding of C++. 
+    My experience also extends to SQL and databasing, enhancing my ability to build comprehensive software solutions. 
+    I favor Ubuntu for my development work but am also proficient with Windows and macOS.
+    
+    While I’m still new to mobile development, particularly iOS, I am actively working on personal projects to expand my skill set in this area. 
+    I thrive in dynamic, high-pressure environments, where my adaptability, time management skills, and dedication shine.
+    
+    Outside of the coding world, I am an avid gamer who enjoys multiplayer and co-op experiences, and I stay active through cycling, basketball, and volleyball. 
+    My enthusiasm for technology extends beyond work—I am genuinely fascinated by the software that makes our lives easier and more enjoyable.
+    
+    Feel free to explore my portfolio to see some of the projects I've worked on and learn more about my professional journey. Thanks for visiting!`
     );
 
   });
@@ -230,7 +277,7 @@ describe(`HomeComponent`, () => {
       \n> <a class="dynamicText">About</a>                  \nThis will navigate you to the 'about' page of the app.\n
       \n> <a class="dynamicText">Projects</a>               \nThis will navigate you to the 'projects' page of the app.\n
       \n> <a class="dynamicText">Resume</a>                 \nThis will download my resume for you.\n
-      \n> <a class="dynamicText">Contact</a>                \nWill show the multiple ways you can get in contact with me.\n
+      \n> <a class="dynamicText">Contacts</a>                \nWill show the multiple ways you can get in contact with me.\n
 
       There would hopefully be more commands to run in the future, look forward to it!`
 
