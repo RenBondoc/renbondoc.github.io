@@ -13,17 +13,11 @@
           ? 'mobile-cover-text-container'
           : 'desktop-cover-text-container'
       " *ngIf="isCoverTextHidden()">
-      <p class="text">
-        Welcome to Renan's Portfolio<br /><br />Click Here to Start
-      </p>
+      <p class="text">Welcome to Renan's Portfolio<br /><br />Click Here to Start</p>
     </div>
   </ng-template>
 
-  <div id="autoScroll" *ngIf="getShowText(); else coverText" class="text-container" [ngClass]="
-        getIsMobile()
-          ? 'mobile-text-container'
-          : 'desktop-text-container'
-      ">
+  <div id="autoScroll" *ngIf="getShowText(); else coverText" class="text-container">
     <ul>
       <li *ngFor="let previousText of getPreviousTexts(); let i = index">
         <span [ngClass]="getIsMobile() ? 'mobile-text' : 'text'" [innerHTML]="previousText"></span>

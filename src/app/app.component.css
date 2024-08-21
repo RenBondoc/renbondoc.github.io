@@ -58,12 +58,10 @@ img {
   }
 }
 
-.desktop-text-container {
-  height: 80vh;
-}
-
-.mobile-text-container {
-  height: 65vh;
+@media only screen and (max-width: 600px) {
+  .text-container {
+    height: 65vh;
+  }
 }
 
 li:before {
