@@ -39,7 +39,6 @@ img {
   overflow-y: auto;
   overflow-x: hidden;
   display: inline;
-  min-height: -webkit-fill-available;
 
   li {
     padding-bottom: 2%;
